@@ -68,7 +68,7 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggle = document.getElementById('themeToggle');
     
     // Navegação suave
     navLinks.forEach(link => {
@@ -1385,9 +1385,182 @@ function animateNumbers() {
     });
 }
 
+// Função para criar a rede neural 3D
+function createNeuralNetwork() {
+    const neuralContainer = document.getElementById('neural-network');
+    if (!neuralContainer) return;
+
+    const nodes = [];
+    const connections = [];
+    
+    // Criar nós da rede neural
+    function createNodes() {
+        const nodeCount = window.innerWidth < 768 ? 12 : 20;
+        
+        for (let i = 0; i < nodeCount; i++) {
+            const node = document.createElement('div');
+            node.className = Math.random() > 0.6 ? 'neural-node purple' : 'neural-node';
+            
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            node.style.left = x + 'px';
+            node.style.top = y + 'px';
+            node.style.animationDelay = Math.random() * 3 + 's';
+            
+            neuralContainer.appendChild(node);
+            nodes.push({ element: node, x, y, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
+        }
+    }
+
+    // Criar conexões entre nós
+    function createConnections() {
+        nodes.forEach((nodeA, i) => {
+            nodes.forEach((nodeB, j) => {
+                if (i !== j) {
+                    const distance = Math.sqrt(
+                        Math.pow(nodeA.x - nodeB.x, 2) + 
+                        Math.pow(nodeA.y - nodeB.y, 2)
+                    );
+                    
+                    if (distance < 200 && Math.random() > 0.7) {
+                        const connection = document.createElement('div');
+                        connection.className = 'neural-connection';
+                        
+                        const angle = Math.atan2(nodeB.y - nodeA.y, nodeB.x - nodeA.x);
+                        connection.style.left = nodeA.x + 'px';
+                        connection.style.top = nodeA.y + 'px';
+                        connection.style.width = distance + 'px';
+                        connection.style.transform = `rotate(${angle}rad)`;
+                        connection.style.animationDelay = Math.random() * 4 + 's';
+                        
+                        neuralContainer.appendChild(connection);
+                        connections.push(connection);
+                    }
+                }
+            });
+        });
+    }
+
+    // Criar elementos flutuantes
+    function createFloatingElements() {
+        const floatingCount = window.innerWidth < 768 ? 3 : 6;
+        
+        for (let i = 0; i < floatingCount; i++) {
+            const floating = document.createElement('div');
+            floating.className = 'neural-floating';
+            
+            floating.style.left = Math.random() * window.innerWidth + 'px';
+            floating.style.top = Math.random() * window.innerHeight + 'px';
+            floating.style.animationDelay = Math.random() * 8 + 's';
+            
+            neuralContainer.appendChild(floating);
+        }
+    }
+
+    // Criar efeito matrix de código
+    function createCodeMatrix() {
+        const codeSnippets = [
+            'const neural = new Network()',
+            'function connect(nodes)',
+            'class AI extends Brain',
+            'import tensorflow as tf',
+            'let synapse = activate()',
+            'neural.train(dataset)',
+            '{ learning: true }',
+            'async predict(input)',
+            'model.compile()',
+            'return intelligence'
+        ];
+
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                const matrix = document.createElement('div');
+                matrix.className = 'code-matrix';
+                matrix.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                
+                matrix.style.left = Math.random() * window.innerWidth + 'px';
+                matrix.style.top = '-50px';
+                
+                neuralContainer.appendChild(matrix);
+                
+                setTimeout(() => {
+                    if (matrix.parentNode) {
+                        matrix.parentNode.removeChild(matrix);
+                    }
+                }, 10000);
+            }
+        }, 3000);
+    }
+
+    // Animação dos nós (movimento suave)
+    function animateNodes() {
+        nodes.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            // Bounce nas bordas
+            if (node.x <= 0 || node.x >= window.innerWidth) node.vx *= -1;
+            if (node.y <= 0 || node.y >= window.innerHeight) node.vy *= -1;
+            
+            node.element.style.left = node.x + 'px';
+            node.element.style.top = node.y + 'px';
+        });
+        
+        requestAnimationFrame(animateNodes);
+    }
+
+    // Interação com o mouse
+    function addMouseInteraction() {
+        neuralContainer.addEventListener('mousemove', (e) => {
+            nodes.forEach(node => {
+                const distance = Math.sqrt(
+                    Math.pow(e.clientX - node.x, 2) + 
+                    Math.pow(e.clientY - node.y, 2)
+                );
+                
+                if (distance < 100) {
+                    const force = (100 - distance) / 100;
+                    const angle = Math.atan2(node.y - e.clientY, node.x - e.clientX);
+                    
+                    node.vx += Math.cos(angle) * force * 0.02;
+                    node.vy += Math.sin(angle) * force * 0.02;
+                    
+                    // Limitar velocidade
+                    const maxSpeed = 2;
+                    const speed = Math.sqrt(node.vx * node.vx + node.vy * node.vy);
+                    if (speed > maxSpeed) {
+                        node.vx = (node.vx / speed) * maxSpeed;
+                        node.vy = (node.vy / speed) * maxSpeed;
+                    }
+                }
+            });
+        });
+    }
+
+    // Inicializar tudo
+    createNodes();
+    createConnections();
+    createFloatingElements();
+    createCodeMatrix();
+    animateNodes();
+    addMouseInteraction();
+
+    // Recriar ao redimensionar
+    window.addEventListener('resize', debounce(() => {
+        neuralContainer.innerHTML = '';
+        nodes.length = 0;
+        connections.length = 0;
+        createNodes();
+        createConnections();
+        createFloatingElements();
+    }, 250));
+}
+
 // Atualizar a função de inicialização principal
 function initializeApp() {
     createParticles();
+    createNeuralNetwork(); // Adicionar rede neural
     initNavigation();
     initTypewriterEffect();
     initScrollAnimations();

@@ -222,6 +222,33 @@ body.light-theme #particles {
     opacity: 0.3;
 }
 
+body.light-theme #neural-network {
+    background: radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                var(--bg-primary-light);
+}
+
+body.light-theme .neural-node {
+    background: radial-gradient(circle, rgba(0, 150, 100, 0.6) 0%, rgba(0, 150, 100, 0.1) 70%, transparent 100%);
+    box-shadow: 0 0 15px rgba(0, 150, 100, 0.3);
+}
+
+body.light-theme .neural-node.purple {
+    background: radial-gradient(circle, rgba(120, 80, 200, 0.6) 0%, rgba(120, 80, 200, 0.1) 70%, transparent 100%);
+    box-shadow: 0 0 15px rgba(120, 80, 200, 0.3);
+}
+
+body.light-theme .neural-connection {
+    background: linear-gradient(90deg, 
+        rgba(0, 150, 100, 0.2) 0%, 
+        rgba(0, 150, 180, 0.25) 50%, 
+        rgba(120, 80, 200, 0.2) 100%);
+}
+
+body.light-theme .code-matrix {
+    color: rgba(0, 150, 100, 0.4);
+}
+
 /* Partículas de fundo */
 #particles {
     position: fixed;
@@ -232,13 +259,26 @@ body.light-theme #particles {
     z-index: -1;
 }
 
+/* Neural Network Background */
+#neural-network {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                var(--bg-primary);
+}
+
 /* Seção Hero */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
-    padding: 0 20px;
+    padding: 120px 20px 0 20px; /* Aumentado padding-top para não cortar o título */
 }
 
 .hero-content {
@@ -258,11 +298,12 @@ body.light-theme #particles {
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin: 1.5rem 0 1rem 0; /* Adicionado margin-top para melhor espaçamento */
     background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.2; /* Melhor espaçamento entre linhas */
 }
 
 .typing-animation {
@@ -1632,6 +1673,121 @@ footer {
 .fade-out {
     opacity: 0;
     pointer-events: none;
+}
+
+/* Neural Network 3D Styles */
+.neural-node {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.8) 0%, rgba(0, 255, 136, 0.2) 70%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    animation: pulse-node 3s infinite ease-in-out;
+}
+
+.neural-node.purple {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(139, 92, 246, 0.2) 70%, transparent 100%);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.neural-connection {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(0, 255, 136, 0.3) 0%, 
+        rgba(0, 212, 255, 0.4) 50%, 
+        rgba(139, 92, 246, 0.3) 100%);
+    transform-origin: left center;
+    opacity: 0;
+    animation: connect-pulse 4s infinite ease-in-out;
+}
+
+.neural-floating {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: conic-gradient(from 0deg, 
+        rgba(0, 255, 136, 0.6), 
+        rgba(0, 212, 255, 0.6), 
+        rgba(139, 92, 246, 0.6), 
+        rgba(0, 255, 136, 0.6));
+    border-radius: 50%;
+    animation: float-rotate 8s infinite linear;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+@keyframes pulse-node {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+@keyframes connect-pulse {
+    0%, 100% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    25% {
+        opacity: 0.6;
+        transform: scaleX(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    75% {
+        opacity: 0.6;
+        transform: scaleX(0.5);
+    }
+}
+
+@keyframes float-rotate {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-20px) rotate(120deg);
+    }
+    66% {
+        transform: translateY(10px) rotate(240deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(360deg);
+    }
+}
+
+/* Code Matrix Effect */
+.code-matrix {
+    position: absolute;
+    font-family: var(--font-code);
+    font-size: 14px;
+    color: rgba(0, 255, 136, 0.3);
+    white-space: nowrap;
+    animation: matrix-fall 10s infinite linear;
+    opacity: 0.7;
+}
+
+@keyframes matrix-fall {
+    0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
 }
 
 /* About Stats */
