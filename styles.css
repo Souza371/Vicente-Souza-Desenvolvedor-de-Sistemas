@@ -3025,7 +3025,28 @@ footer {
 .hero-profile-center {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
     margin-bottom: 2rem;
+}
+
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .profile-image-center {
@@ -3116,6 +3137,58 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
 }
 
+/* Centralização do título principal */
+.hero-title.text-center {
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Ícones de tecnologia com fundo borrado */
+.hero-tech-icons {
+    display: flex !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 1.5rem !important;
+    margin-top: 2rem !important;
+}
+
+.tech-icon {
+    width: 80px !important;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(15px) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(0, 255, 255, 0.3) !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        inset 0 0 15px rgba(0, 255, 255, 0.1) !important;
+}
+
+.tech-icon:hover {
+    transform: translateY(-10px) scale(1.05) !important;
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 
+        0 15px 40px rgba(0, 255, 255, 0.4),
+        inset 0 0 25px rgba(0, 255, 255, 0.2) !important;
+}
+
+.tech-icon i {
+    font-size: 2.5rem !important;
+    color: var(--neon-cyan) !important;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8) !important;
+    transition: all 0.3s ease !important;
+}
+
+.tech-icon:hover i {
+    color: var(--neon-magenta) !important;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.9) !important;
+    transform: scale(1.1) !important;
+}
+
 /* Parágrafos mais legíveis */
 p {
     color: var(--text-secondary) !important;
@@ -3127,11 +3200,14 @@ p {
 .hero-description {
     color: var(--text-secondary) !important;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
-    background: rgba(0, 0, 0, 0.3) !important;
+    background: rgba(0, 0, 0, 0.6) !important;
     padding: 1.5rem !important;
-    border-radius: 10px !important;
-    border: 1px solid rgba(0, 255, 255, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(0, 255, 255, 0.4) !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(0, 255, 255, 0.1) !important;
 }
 
 /* Links da navegação mais legíveis */
