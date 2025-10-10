@@ -113,35 +113,44 @@ function initNavigation() {
 
 // Sistema de alternância de tema
 function initThemeToggle(themeToggle) {
+    if (!themeToggle) {
+        console.error('Botão de tema não encontrado!');
+        return;
+    }
+    
     // Verificar tema salvo no localStorage
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Aplicar tema inicial
-    if (savedTheme) {
-        document.body.classList.toggle('light-theme', savedTheme === 'light');
-        updateThemeIcon(themeToggle, savedTheme === 'light');
-    } else if (!prefersDark) {
+    // Aplicar tema inicial (padrão: escuro)
+    if (savedTheme === 'light') {
         document.body.classList.add('light-theme');
         updateThemeIcon(themeToggle, true);
+    } else {
+        document.body.classList.remove('light-theme');
+        updateThemeIcon(themeToggle, false);
     }
     
     // Event listener para alternância
-    themeToggle.addEventListener('click', function() {
+    themeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         const isLightTheme = document.body.classList.contains('light-theme');
         
-        // Alternar tema
-        document.body.classList.toggle('light-theme');
-        const newTheme = isLightTheme ? 'dark' : 'light';
-        
-        // Salvar preferência
-        localStorage.setItem('theme', newTheme);
-        
-        // Atualizar ícone
-        updateThemeIcon(themeToggle, !isLightTheme);
+        if (isLightTheme) {
+            // Mudar para tema escuro
+            document.body.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark');
+            updateThemeIcon(themeToggle, false);
+        } else {
+            // Mudar para tema claro
+            document.body.classList.add('light-theme');
+            localStorage.setItem('theme', 'light');
+            updateThemeIcon(themeToggle, true);
+        }
         
         // Animação suave
-        document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+        document.body.style.transition = 'all 0.3s ease';
         setTimeout(() => {
             document.body.style.transition = '';
         }, 300);
@@ -914,7 +923,6 @@ function formatTime(ms) {
     } else {
         return `${seconds}s`;
     }
-}   setTimeout(typeWriter, 1000);
 }
 
 // Animações no scroll

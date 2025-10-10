@@ -197,12 +197,45 @@ body {
 
 /* Tema claro */
 body.light-theme {
-    --bg-primary: var(--bg-primary-light);
-    --bg-secondary: var(--bg-secondary-light);
-    --bg-tertiary: var(--bg-tertiary-light);
-    --text-primary: var(--text-primary-light);
-    --text-secondary: var(--text-secondary-light);
-    --text-muted: var(--text-muted-light);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+body.light-theme .navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .nav-link {
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .nav-logo span {
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .section {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+body.light-theme .hero {
+    background: var(--bg-primary);
+}
+
+body.light-theme .hero-title .highlight {
+    background: linear-gradient(135deg, #0066cc, #6600cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 body.light-theme .project-image {
@@ -247,6 +280,44 @@ body.light-theme .neural-connection {
 
 body.light-theme .code-matrix {
     color: rgba(0, 150, 100, 0.4);
+}
+
+body.light-theme .skill-item {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .experience-item {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-theme .blog-item {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-theme .contact-item {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .btn-primary {
+    background: linear-gradient(135deg, #0066cc, #6600cc);
+    border: none;
+}
+
+body.light-theme .btn-secondary {
+    background: transparent;
+    border: 2px solid #0066cc;
+    color: #0066cc;
+}
+
+body.light-theme .theme-toggle {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
 }
 
 /* Partículas de fundo */
