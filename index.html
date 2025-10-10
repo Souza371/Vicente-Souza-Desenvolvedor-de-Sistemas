@@ -1,21 +1,274 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Vicente Souza - Portfolio TESTE</title>
-    <style>
-        body { 
-            background: #0f0f23; 
-            color: white; 
-            font-family: Arial; 
-            text-align: center; 
-            padding: 50px;
-        }
-        h1 { color: #00d4ff; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vicente Souza - Desenvolvedor de Sistemas, Full Stack em Formação. Portfólio com projetos de sistemas, games e automações.">
+    <meta name="keywords" content="Vicente Souza, Desenvolvedor, Full Stack, Java, Python, JavaScript, SQL, GitHub">
+    <meta name="author" content="Vicente Souza">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Vicente Souza | Desenvolvedor de Sistemas">
+    <meta property="og:description" content="Full Stack em Formação - Portfólio com projetos de sistemas, games e automações">
+    <meta property="og:type" content="website">
+    
+    <title>Vicente Souza | Desenvolvedor de Sistemas</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00d4ff">
 </head>
 <body>
-    <h1>🚀 Vicente Souza - Desenvolvedor</h1>
-    <p>Servidor funcionando perfeitamente!</p>
-    <p>Portfólio sendo carregado...</p>
+    <!-- Navegação -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">
+                    <i class="fas fa-code"></i>
+                    <span>Vicente.dev</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link">Habilidades</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#experience" class="nav-link">Experiência</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">Projetos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contato</a>
+                </li>
+            </ul>
+            
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Olá, eu sou <span class="highlight">Vicente Souza</span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    <span class="typewriter" data-text="Desenvolvedor de Sistemas,Full Stack em Formação,Criador de Soluções Inovadoras"></span>
+                </h2>
+                <p class="hero-description">
+                    Especializado em desenvolvimento de sistemas, games e automações. 
+                    Apaixonado por tecnologia e sempre buscando criar soluções eficientes e inovadoras.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Ver Projetos
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        Entre em Contato
+                    </a>
+                </div>
+                <div class="hero-social">
+                    <a href="https://github.com/Souza371" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/vicente-souza-dev" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:vicente.souza.dev@email.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-animation">
+                    <div class="code-line">
+                        <span class="code-comment">// Desenvolvedor Full Stack</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="code-keyword">class</span> 
+                        <span class="code-class">Vicente</span> 
+                        <span class="code-keyword">extends</span> 
+                        <span class="code-class">Developer</span> {
+                    </div>
+                    <div class="code-line indent">
+                        <span class="code-method">constructor</span>() {
+                    </div>
+                    <div class="code-line indent2">
+                        <span class="code-keyword">this</span>.<span class="code-property">skills</span> = [
+                    </div>
+                    <div class="code-line indent3">
+                        <span class="code-string">'Java'</span>, 
+                        <span class="code-string">'Python'</span>, 
+                        <span class="code-string">'JavaScript'</span>
+                    </div>
+                    <div class="code-line indent2">
+                        ];
+                    </div>
+                    <div class="code-line indent">
+                        }
+                    </div>
+                    <div class="code-line">
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sobre Mim</h2>
+                <p class="section-subtitle">Desenvolvedor apaixonado por tecnologia e inovação</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Desenvolvedor de Sistemas em Formação</h3>
+                    <p>
+                        Sou um desenvolvedor Full Stack em formação, especializado na criação de sistemas robustos, 
+                        games interativos e soluções de automação. Com experiência em múltiplas linguagens de programação, 
+                        estou sempre buscando aprender novas tecnologias e aplicar as melhores práticas de desenvolvimento.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section skills" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Habilidades Técnicas</h2>
+                <p class="section-subtitle">Tecnologias que domino e estou aprendendo</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Linguagens de Programação</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Java</span>
+                                <span class="skill-level">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-level">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-level">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meus Projetos</h2>
+                <p class="section-subtitle">Sistemas, games e automações que desenvolvi</p>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
+                <div class="loading-projects">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Carregando projetos do GitHub...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-subtitle">Vamos trabalhar juntos no seu próximo projeto</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Informações de Contato</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>vicente.souza.dev@email.com</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Seu Nome</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Seu Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <label for="message">Sua Mensagem</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
