@@ -1261,6 +1261,160 @@ window.addEventListener('resize', debounce(function() {
     }
 }, 250));
 
+// Animações para as novas seções
+function initNewSectionsAnimations() {
+    // Animação dos itens de experiência
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Observar elementos de experiência
+    document.querySelectorAll('.experience-item').forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+        observer.observe(item);
+    });
+
+    // Observar elementos do blog
+    document.querySelectorAll('.blog-item').forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+        observer.observe(item);
+    });
+
+    // Observar estatísticas do GitHub
+    document.querySelectorAll('.stat-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+        observer.observe(card);
+    });
+
+    // Observar tags de estudo
+    document.querySelectorAll('.studying-tag').forEach((tag, index) => {
+        tag.style.opacity = '0';
+        tag.style.transform = 'scale(0.8)';
+        tag.style.transition = `all 0.4s ease ${index * 0.05}s`;
+        observer.observe(tag);
+    });
+}
+
+// Função para atualizar informações do GitHub em tempo real
+async function updateGitHubInfo() {
+    try {
+        const response = await fetch('https://api.github.com/users/Souza371');
+        const userData = response.json();
+        
+        if (userData) {
+            // Atualizar contadores se necessário
+            const reposCount = document.querySelector('.stat-card .stat-number');
+            if (reposCount && userData.public_repos) {
+                reposCount.textContent = `${userData.public_repos}+`;
+            }
+        }
+    } catch (error) {
+        console.log('Info do GitHub será mantida estática');
+    }
+}
+
+// Função para adicionar efeitos hover personalizados
+function initCustomHoverEffects() {
+    // Efeito hover nos cartões de experiência
+    document.querySelectorAll('.experience-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Efeito hover nos itens do blog
+    document.querySelectorAll('.blog-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const image = this.querySelector('.blog-image i');
+            if (image) {
+                image.style.transform = 'scale(1.2) rotate(5deg)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const image = this.querySelector('.blog-image i');
+            if (image) {
+                image.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+}
+
+// Função para animar números das estatísticas
+function animateNumbers() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const number = entry.target;
+                const finalNumber = number.textContent.replace(/\D/g, '');
+                const duration = 1500;
+                const increment = finalNumber / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= finalNumber) {
+                        current = finalNumber;
+                        clearInterval(timer);
+                        number.textContent = finalNumber + (number.textContent.includes('+') ? '+' : '');
+                    } else {
+                        number.textContent = Math.floor(current);
+                    }
+                }, 16);
+            }
+        });
+    });
+    
+    document.querySelectorAll('.stat-number').forEach(number => {
+        observer.observe(number);
+    });
+}
+
+// Atualizar a função de inicialização principal
+function initializeApp() {
+    createParticles();
+    initNavigation();
+    initTypewriterEffect();
+    initScrollAnimations();
+    initSkillsAnimations();
+    initGitHubAPI();
+    initBlogSystem();
+    initContactForm();
+    initPWA();
+    initAnalytics();
+    
+    // Adicionar as novas inicializações
+    initNewSectionsAnimations();
+    initCustomHoverEffects();
+    animateNumbers();
+    updateGitHubInfo();
+    
+    // Remover preloader após carregamento
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('fade-out');
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            isLoading = false;
+        }, 500);
+    }, 1500);
+}
+
 // Easter egg - console
 console.log(`
 %c
