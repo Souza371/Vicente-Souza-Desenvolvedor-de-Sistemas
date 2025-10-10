@@ -131,10 +131,7 @@ function initThemeToggle(themeToggle) {
     }
     
     // Event listener para alternância
-    themeToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
+    themeToggle.addEventListener('click', function() {
         const isLightTheme = document.body.classList.contains('light-theme');
         
         if (isLightTheme) {
