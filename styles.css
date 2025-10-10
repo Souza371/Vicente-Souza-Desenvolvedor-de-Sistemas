@@ -343,30 +343,179 @@ body.light-theme .theme-toggle {
                 var(--bg-primary);
 }
 
-/* 3D Neural Background */
-#neural-3d-bg {
+/* Professional Code Background */
+#professional-bg {
     position: fixed;
     top: 0;
     right: 0;
-    width: 50%;
+    width: 60%;
     height: 100vh;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.8;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+#code-canvas {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+#floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
 }
 
-#neural-3d-bg canvas {
-    width: 100% !important;
-    height: 100% !important;
-    background: transparent !important;
+.floating-cube {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, 
+        rgba(0, 212, 255, 0.3), 
+        rgba(139, 92, 246, 0.3));
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    animation: float-cube 8s infinite ease-in-out;
+    transform-style: preserve-3d;
 }
 
-/* Responsividade do 3D */
-@media (max-width: 768px) {
-    #neural-3d-bg {
-        width: 100%;
+.floating-cube::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 136, 0.2), 
+        rgba(139, 92, 246, 0.2));
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    transform: rotateX(45deg) rotateY(-45deg);
+}
+
+.floating-hex {
+    position: absolute;
+    width: 30px;
+    height: 26px;
+    background: rgba(0, 212, 255, 0.2);
+    clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+    animation: float-hex 6s infinite ease-in-out;
+    border: 1px solid rgba(0, 212, 255, 0.4);
+}
+
+.floating-circle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle, 
+        rgba(0, 255, 136, 0.4), 
+        rgba(0, 255, 136, 0.1));
+    border-radius: 50%;
+    animation: float-circle 10s infinite ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.code-fragment {
+    position: absolute;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: rgba(0, 212, 255, 0.4);
+    animation: code-drift 12s infinite linear;
+    white-space: nowrap;
+}
+
+@keyframes float-cube {
+    0%, 100% {
+        transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translateY(-20px) rotateX(90deg) rotateY(45deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-10px) rotateX(180deg) rotateY(90deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(-30px) rotateX(270deg) rotateY(135deg);
+        opacity: 0.5;
+    }
+}
+
+@keyframes float-hex {
+    0%, 100% {
+        transform: translateX(0px) rotate(0deg);
         opacity: 0.4;
     }
+    33% {
+        transform: translateX(-15px) rotate(120deg);
+        opacity: 0.7;
+    }
+    66% {
+        transform: translateX(15px) rotate(240deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes float-circle {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-25px) scale(1.3);
+        opacity: 0.8;
+    }
+}
+
+@keyframes code-drift {
+    0% {
+        transform: translateX(100vw) translateY(0px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(-100px) translateY(-20px);
+        opacity: 0;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #professional-bg {
+        width: 100%;
+        opacity: 0.5;
+    }
+    
+    .floating-cube, .floating-hex {
+        display: none;
+    }
+}
+
+/* Tema claro */
+body.light-theme #professional-bg {
+    opacity: 0.3;
+}
+
+body.light-theme .floating-cube {
+    background: linear-gradient(45deg, 
+        rgba(0, 100, 150, 0.2), 
+        rgba(100, 60, 180, 0.2));
+    border-color: rgba(0, 100, 150, 0.4);
+}
+
+body.light-theme .code-fragment {
+    color: rgba(0, 100, 150, 0.3);
 }
 
 /* Seção Hero */
