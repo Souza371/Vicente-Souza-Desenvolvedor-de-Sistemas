@@ -79,13 +79,33 @@
         </div>
     </nav>
 
-    <!-- Neural Network Background -->
-    <div id="neural-network"></div>
+    <!-- Digital Developer Matrix Background -->
+    <div id="digital-matrix">
+        <canvas id="matrix-canvas"></canvas>
+        <canvas id="hex-canvas"></canvas>
+        <canvas id="particles-canvas"></canvas>
+    </div>
     
-    <!-- Professional Code Background -->
-    <div id="professional-bg">
-        <canvas id="code-canvas"></canvas>
-        <div id="floating-elements"></div>
+    <!-- Terminal Loading Animation -->
+    <div id="terminal-loader" class="terminal-loader">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">vicente@developer:~$</div>
+            </div>
+            <div class="terminal-content">
+                <div class="loading-text">
+                    <span class="prompt">root@vicente-dev:~#</span> <span class="command">initializing_portfolio.sh</span>
+                </div>
+                <div class="loading-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- Home Section -->
@@ -647,7 +667,7 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contact-form">
                     <div class="form-group">
                         <input type="text" id="name" name="name" required>
                         <label for="name">Seu Nome</label>
@@ -669,7 +689,7 @@
         </div>
     </section>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    <!-- JavaScript Digital Matrix -->
+    <script src="digital-matrix.js"></script>
 </body>
 </html>

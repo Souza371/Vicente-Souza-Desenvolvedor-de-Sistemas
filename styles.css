@@ -6,15 +6,17 @@
 }
 
 :root {
-    /* Cores principais */
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #111111;
-    --bg-tertiary: #1a1a1a;
+    /* Cores principais - Tema Digital Unique */
+    --bg-primary: #000008;
+    --bg-secondary: #0a0a15;
+    --bg-tertiary: #111122;
     
-    /* Cores neon */
-    --neon-blue: #00d4ff;
-    --neon-purple: #8b5cf6;
-    --neon-green: #00ff88;
+    /* Cores neon únicas */
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --neon-electric: #00d4ff;
+    --neon-violet: #7c3aed;
+    --neon-orange: #ff6b35;
     
     /* Cores de texto */
     --text-primary: #ffffff;
@@ -2659,4 +2661,279 @@ footer {
     .github-stats {
         padding: 2rem 1rem;
     }
+}
+
+/* ===============================================
+   DIGITAL DEVELOPER MATRIX - TEMA ÚNICO
+   =============================================== */
+
+/* Background Digital Matrix */
+#digital-matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, 
+        rgba(0, 20, 40, 0.8) 0%, 
+        rgba(0, 0, 8, 0.95) 70%, 
+        #000008 100%);
+}
+
+#matrix-canvas, #hex-canvas, #particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Terminal Loader Único */
+.terminal-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000008 0%, #0a0a15 50%, #111122 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: all 1s ease;
+}
+
+.terminal-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.terminal-window {
+    width: 600px;
+    max-width: 90vw;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 
+        0 0 50px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    animation: terminalGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes terminalGlow {
+    0% { 
+        box-shadow: 
+            0 0 50px rgba(0, 255, 255, 0.3),
+            inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+    100% { 
+        box-shadow: 
+            0 0 80px rgba(0, 255, 255, 0.5),
+            inset 0 0 30px rgba(0, 255, 255, 0.2);
+    }
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: linear-gradient(90deg, #000008, #0a0a15);
+    border-bottom: 1px solid var(--neon-cyan);
+    border-radius: 6px 6px 0 0;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+}
+
+.control.close {
+    background: linear-gradient(45deg, #ff6b35, #ff00ff);
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+}
+
+.control.minimize {
+    background: linear-gradient(45deg, #00ffff, #00d4ff);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.control.maximize {
+    background: linear-gradient(45deg, #7c3aed, #ff00ff);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+}
+
+.terminal-title {
+    font-family: var(--font-code);
+    color: var(--neon-cyan);
+    font-size: 14px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.terminal-content {
+    padding: 20px;
+    font-family: var(--font-code);
+    color: var(--neon-cyan);
+}
+
+.loading-text {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.prompt {
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+.command {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    animation: typeWriter 3s steps(20) infinite;
+}
+
+@keyframes typeWriter {
+    0%, 50% { 
+        border-right: 2px solid var(--neon-cyan);
+    }
+    51%, 100% { 
+        border-right: 2px solid transparent;
+    }
+}
+
+.loading-progress {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 1px solid var(--neon-cyan);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--neon-cyan) 0%, 
+        var(--neon-magenta) 50%, 
+        var(--neon-violet) 100%);
+    border-radius: 10px;
+    width: 0%;
+    animation: progressLoad 4s ease-in-out forwards;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.8),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes progressLoad {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Efeitos únicos nos elementos existentes */
+.hero-title .highlight {
+    background: linear-gradient(45deg, 
+        var(--neon-cyan), 
+        var(--neon-magenta), 
+        var(--neon-violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Navegação com tema único */
+.navbar {
+    background: rgba(0, 0, 8, 0.95) !important;
+    border-bottom: 2px solid var(--neon-cyan);
+    box-shadow: 0 5px 30px rgba(0, 255, 255, 0.3);
+}
+
+.nav-logo a {
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.nav-link:hover {
+    color: var(--neon-cyan) !important;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+    transition: width var(--transition-normal);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Botões com tema único */
+.btn-primary {
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet)) !important;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: transparent !important;
+    border: 2px solid var(--neon-magenta) !important;
+    color: var(--neon-magenta) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--neon-magenta) !important;
+    color: var(--bg-primary) !important;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.5) !important;
 }
