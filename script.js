@@ -15,6 +15,7 @@ function initializeApp() {
     initScrollAnimations();
     initSkillsAnimations();
     initGitHubAPI();
+    initBlogSystem();
     initContactForm();
     initPWA();
     initAnalytics();
@@ -427,6 +428,160 @@ function createProjectCardFromRepo(repo) {
     `;
     
     return card;
+}
+
+// Sistema de Blog e Filtros
+function initBlogSystem() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+    const readMoreButtons = document.querySelectorAll('.read-more-btn');
+    
+    // Inicializar filtros
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            
+            // Atualizar botões ativos
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filtrar cards
+            filterBlogCards(category, blogCards);
+        });
+    });
+    
+    // Inicializar botões de leitura
+    readMoreButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const card = this.closest('.blog-card');
+            const title = card.querySelector('h3').textContent;
+            openBlogModal(title, card);
+        });
+    });
+    
+    // Animar cards quando entram na tela
+    initBlogAnimations();
+}
+
+function filterBlogCards(category, cards) {
+    cards.forEach((card, index) => {
+        const cardCategories = card.getAttribute('data-category');
+        const shouldShow = category === 'all' || cardCategories.includes(category);
+        
+        // Aplicar filtro com animação
+        setTimeout(() => {
+            if (shouldShow) {
+                card.classList.remove('hidden');
+                card.classList.add('animate-in');
+            } else {
+                card.classList.add('hidden');
+                card.classList.remove('animate-in');
+            }
+        }, index * 100);
+    });
+    
+    // Atualizar contagem de artigos (opcional)
+    updateBlogCount(category, cards);
+}
+
+function updateBlogCount(category, cards) {
+    const visibleCards = Array.from(cards).filter(card => {
+        const cardCategories = card.getAttribute('data-category');
+        return category === 'all' || cardCategories.includes(category);
+    });
+    
+    // Opcional: mostrar contagem na interface
+    console.log(`Mostrando ${visibleCards.length} artigo(s) da categoria: ${category}`);
+}
+
+function openBlogModal(title, card) {
+    // Simular abertura de artigo (você pode implementar um modal ou redirecionar)
+    const category = card.querySelector('.blog-category').textContent;
+    const description = card.querySelector('p').textContent;
+    
+    // Por enquanto, mostramos um alert (você pode implementar um modal completo)
+    const confirmation = confirm(`
+📖 Abrir Artigo: "${title}"
+
+Categoria: ${category}
+Descrição: ${description}
+
+Este é um artigo de exemplo. Em uma implementação real, 
+este seria um link para o artigo completo ou abriria um modal.
+
+Deseja continuar para uma versão de exemplo?
+    `);
+    
+    if (confirmation) {
+        // Aqui você poderia:
+        // 1. Abrir um modal com o artigo completo
+        // 2. Redirecionar para uma página específica do artigo
+        // 3. Carregar o conteúdo via AJAX
+        
+        showNotification(`Artigo "${title}" carregado com sucesso!`, 'success');
+        
+        // Simular analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'blog_article_view', {
+                'article_title': title,
+                'article_category': category
+            });
+        }
+    }
+}
+
+function initBlogAnimations() {
+    const blogSection = document.getElementById('blog');
+    const blogCards = document.querySelectorAll('.blog-card');
+    
+    const blogObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Animar cards sequencialmente
+                blogCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        if (!card.classList.contains('hidden')) {
+                            card.style.animation = `blogCardIn 0.6s ease forwards`;
+                        }
+                    }, index * 150);
+                });
+                
+                blogObserver.unobserve(blogSection);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    if (blogSection) {
+        blogObserver.observe(blogSection);
+    }
+}
+
+// Funcionalidade adicional: Sistema de busca no blog
+function initBlogSearch() {
+    const searchInput = document.getElementById('blog-search');
+    const blogCards = document.querySelectorAll('.blog-card');
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            blogCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+                
+                const matches = title.includes(searchTerm) || 
+                               description.includes(searchTerm) || 
+                               tags.includes(searchTerm);
+                
+                if (matches || searchTerm === '') {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    }
 }
 
 // Configuração PWA (Progressive Web App)
