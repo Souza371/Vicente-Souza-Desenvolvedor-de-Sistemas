@@ -2691,153 +2691,233 @@ footer {
     pointer-events: none;
 }
 
-/* Terminal Loader Único */
-.terminal-loader {
+/* Digital DNA Sequence Loader Único */
+.dna-loader {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #000008 0%, #0a0a15 50%, #111122 100%);
+    background: radial-gradient(ellipse at center, 
+        rgba(0, 20, 40, 0.95) 0%, 
+        rgba(0, 0, 8, 0.98) 70%, 
+        #000008 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10000;
     opacity: 1;
-    transition: all 1s ease;
+    transition: all 1.5s ease;
+    overflow: hidden;
 }
 
-.terminal-loader.hidden {
+.dna-loader.hidden {
     opacity: 0;
     pointer-events: none;
+    transform: scale(0.8);
 }
 
-.terminal-window {
-    width: 600px;
-    max-width: 90vw;
-    background: rgba(0, 0, 0, 0.9);
+.dna-container {
+    text-align: center;
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+}
+
+.dna-title {
+    margin-bottom: 2rem;
+}
+
+.dna-text {
+    font-family: var(--font-code);
+    font-size: 3.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, 
+        var(--neon-cyan), 
+        var(--neon-magenta), 
+        var(--neon-violet),
+        var(--neon-cyan));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: dnaGradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+    margin: 0;
+}
+
+@keyframes dnaGradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.dna-subtitle {
+    font-family: var(--font-code);
+    font-size: 1.2rem;
+    color: var(--neon-cyan);
+    margin: 0.5rem 0 0 0;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.dna-helix-container {
+    position: relative;
+    height: 300px;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dna-canvas {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+}
+
+.dna-info {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
     border-radius: 8px;
-    border: 2px solid var(--neon-cyan);
-    box-shadow: 
-        0 0 50px rgba(0, 255, 255, 0.3),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
-    animation: terminalGlow 2s ease-in-out infinite alternate;
+    border: 1px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
 }
 
-@keyframes terminalGlow {
-    0% { 
-        box-shadow: 
-            0 0 50px rgba(0, 255, 255, 0.3),
-            inset 0 0 20px rgba(0, 255, 255, 0.1);
-    }
-    100% { 
-        box-shadow: 
-            0 0 80px rgba(0, 255, 255, 0.5),
-            inset 0 0 30px rgba(0, 255, 255, 0.2);
-    }
+.dna-code {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.terminal-header {
+.code-line {
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+    animation: binaryFlicker 1.5s ease-in-out infinite;
+}
+
+.code-line:nth-child(2) {
+    animation-delay: 0.5s;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.code-line:nth-child(3) {
+    animation-delay: 1s;
+    color: var(--neon-violet);
+    text-shadow: 0 0 10px rgba(124, 58, 237, 0.8);
+}
+
+@keyframes binaryFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.dna-progress {
+    margin-top: 2rem;
+}
+
+.progress-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
-    background: linear-gradient(90deg, #000008, #0a0a15);
-    border-bottom: 1px solid var(--neon-cyan);
-    border-radius: 6px 6px 0 0;
-}
-
-.terminal-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.control {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 255, 255, 0.5);
-}
-
-.control.close {
-    background: linear-gradient(45deg, #ff6b35, #ff00ff);
-    box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-}
-
-.control.minimize {
-    background: linear-gradient(45deg, #00ffff, #00d4ff);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-.control.maximize {
-    background: linear-gradient(45deg, #7c3aed, #ff00ff);
-    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
-}
-
-.terminal-title {
+    margin-bottom: 1rem;
     font-family: var(--font-code);
+}
+
+#progress-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
     color: var(--neon-cyan);
-    font-size: 14px;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
 }
 
-.terminal-content {
-    padding: 20px;
-    font-family: var(--font-code);
-    color: var(--neon-cyan);
-}
-
-.loading-text {
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.prompt {
+#progress-status {
     color: var(--neon-magenta);
     text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+    animation: statusPulse 1s ease-in-out infinite;
 }
 
-.command {
-    color: var(--neon-cyan);
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-    animation: typeWriter 3s steps(20) infinite;
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
 }
 
-@keyframes typeWriter {
-    0%, 50% { 
-        border-right: 2px solid var(--neon-cyan);
-    }
-    51%, 100% { 
-        border-right: 2px solid transparent;
-    }
-}
-
-.loading-progress {
-    height: 20px;
+.progress-bar-container {
+    height: 8px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    border: 1px solid var(--neon-cyan);
+    border-radius: 20px;
+    border: 2px solid var(--neon-cyan);
     overflow: hidden;
     position: relative;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.progress-bar {
+.progress-bar-dna {
     height: 100%;
     background: linear-gradient(90deg, 
         var(--neon-cyan) 0%, 
-        var(--neon-magenta) 50%, 
-        var(--neon-violet) 100%);
-    border-radius: 10px;
+        var(--neon-magenta) 30%,
+        var(--neon-violet) 60%, 
+        var(--neon-cyan) 100%);
+    background-size: 200% 100%;
+    border-radius: 20px;
     width: 0%;
-    animation: progressLoad 4s ease-in-out forwards;
+    position: relative;
+    animation: 
+        dnaProgressLoad 5s ease-out forwards,
+        dnaProgressFlow 2s linear infinite;
     box-shadow: 
-        0 0 20px rgba(0, 255, 255, 0.8),
-        inset 0 0 20px rgba(255, 255, 255, 0.2);
+        0 0 25px rgba(0, 255, 255, 0.8),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-@keyframes progressLoad {
+@keyframes dnaProgressLoad {
     0% { width: 0%; }
     100% { width: 100%; }
+}
+
+@keyframes dnaProgressFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* Responsividade para DNA Loader */
+@media (max-width: 768px) {
+    .dna-text {
+        font-size: 2.5rem;
+    }
+    
+    .dna-subtitle {
+        font-size: 1rem;
+    }
+    
+    .dna-helix-container {
+        height: 250px;
+    }
+    
+    .dna-info {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 1rem;
+    }
+    
+    .code-line {
+        font-size: 0.8rem;
+    }
 }
 
 /* Efeitos únicos nos elementos existentes */

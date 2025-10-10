@@ -86,23 +86,32 @@
         <canvas id="particles-canvas"></canvas>
     </div>
     
-    <!-- Terminal Loading Animation -->
-    <div id="terminal-loader" class="terminal-loader">
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="terminal-controls">
-                    <span class="control close"></span>
-                    <span class="control minimize"></span>
-                    <span class="control maximize"></span>
-                </div>
-                <div class="terminal-title">vicente@developer:~$</div>
+    <!-- Digital DNA Sequence Loader -->
+    <div id="dna-loader" class="dna-loader">
+        <div class="dna-container">
+            <div class="dna-title">
+                <h1 class="dna-text">Vicente.dev</h1>
+                <p class="dna-subtitle">Sequenciando Portfólio Digital...</p>
             </div>
-            <div class="terminal-content">
-                <div class="loading-text">
-                    <span class="prompt">root@vicente-dev:~#</span> <span class="command">initializing_portfolio.sh</span>
+            
+            <div class="dna-helix-container">
+                <canvas id="dna-canvas"></canvas>
+                <div class="dna-info">
+                    <div class="dna-code">
+                        <span class="code-line">01001000 01100101 01101100 01101100 01101111</span>
+                        <span class="code-line">01010111 01101111 01110010 01101100 01100100</span>
+                        <span class="code-line">01000100 01100101 01110110 01100101 01101100</span>
+                    </div>
                 </div>
-                <div class="loading-progress">
-                    <div class="progress-bar"></div>
+            </div>
+            
+            <div class="dna-progress">
+                <div class="progress-text">
+                    <span id="progress-percentage">0%</span>
+                    <span id="progress-status">Inicializando...</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-dna"></div>
                 </div>
             </div>
         </div>
