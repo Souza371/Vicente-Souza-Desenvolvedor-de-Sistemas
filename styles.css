@@ -355,11 +355,20 @@ body.light-theme .theme-toggle {
 .hero-content {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.hero-main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
     width: 100%;
+    margin-top: 2rem;
 }
 
 .hero-text {
@@ -1982,6 +1991,108 @@ footer {
     
     .tech-icon i {
         font-size: 1.5rem;
+    }
+}
+
+/* Profile Image */
+.hero-profile {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--neon-blue);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    animation: profile-glow 3s ease-in-out infinite alternate;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.profile-image:hover img {
+    transform: scale(1.1);
+}
+
+.profile-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.placeholder-avatar {
+    color: white;
+    font-size: 4rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.profile-glow {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--neon-blue),
+        var(--neon-purple),
+        var(--neon-green),
+        var(--neon-blue)
+    );
+    z-index: -1;
+    animation: rotate-glow 4s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes profile-glow {
+    0% {
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 50px rgba(0, 212, 255, 0.8), 0 0 70px rgba(139, 92, 246, 0.4);
+    }
+}
+
+@keyframes rotate-glow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsividade da foto */
+@media (max-width: 768px) {
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .hero-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-content {
+        text-align: center;
     }
 }
 
