@@ -1565,7 +1565,7 @@ function createNeuralNetwork() {
 // Atualizar a função de inicialização principal
 function initializeApp() {
     createParticles();
-    createNeuralNetwork(); // Adicionar rede neural
+    createNeuralNetwork(); // Adicionar rede neural 2D
     initNavigation();
     initTypewriterEffect();
     initScrollAnimations();
@@ -1581,6 +1581,11 @@ function initializeApp() {
     initCustomHoverEffects();
     animateNumbers();
     updateGitHubInfo();
+    
+    // Inicializar 3D background
+    setTimeout(() => {
+        init3DNeuralBackground();
+    }, 500);
     
     // Remover preloader após carregamento
     setTimeout(() => {
@@ -1616,3 +1621,190 @@ console.log(`
 `, 'color: #00d4ff; font-family: monospace; font-size: 12px;');
 
 console.log('%cSe você chegou até aqui, definitivamente temos algo em comum! 😄', 'color: #00ff88; font-size: 14px; font-weight: bold;');
+
+// 3D Neural Network Background
+function init3DNeuralBackground() {
+    if (typeof THREE === 'undefined') {
+        console.log('Three.js não carregado, usando fundo 2D');
+        return;
+    }
+
+    const container = document.getElementById('neural-3d-bg');
+    if (!container) return;
+
+    // Cena, câmera e renderizador
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ 
+        antialias: true, 
+        alpha: true,
+        powerPreference: "high-performance"
+    });
+    
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    // Pontos (nós da rede) - cores neon variadas
+    const pointsGroup = new THREE.Group();
+    
+    // Pontos azuis neon
+    const blueGeometry = new THREE.BufferGeometry();
+    const blueVertices = [];
+    for (let i = 0; i < 150; i++) {
+        const x = (Math.random() - 0.5) * 300;
+        const y = (Math.random() - 0.5) * 300;
+        const z = (Math.random() - 0.5) * 300;
+        blueVertices.push(x, y, z);
+    }
+    blueGeometry.setAttribute('position', new THREE.Float32BufferAttribute(blueVertices, 3));
+    const blueMaterial = new THREE.PointsMaterial({ 
+        color: 0x00d4ff, 
+        size: 2,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+    const bluePoints = new THREE.Points(blueGeometry, blueMaterial);
+    pointsGroup.add(bluePoints);
+
+    // Pontos verdes neon
+    const greenGeometry = new THREE.BufferGeometry();
+    const greenVertices = [];
+    for (let i = 0; i < 100; i++) {
+        const x = (Math.random() - 0.5) * 250;
+        const y = (Math.random() - 0.5) * 250;
+        const z = (Math.random() - 0.5) * 250;
+        greenVertices.push(x, y, z);
+    }
+    greenGeometry.setAttribute('position', new THREE.Float32BufferAttribute(greenVertices, 3));
+    const greenMaterial = new THREE.PointsMaterial({ 
+        color: 0x00ff88, 
+        size: 1.5,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
+    });
+    const greenPoints = new THREE.Points(greenGeometry, greenMaterial);
+    pointsGroup.add(greenPoints);
+
+    // Pontos roxos neon
+    const purpleGeometry = new THREE.BufferGeometry();
+    const purpleVertices = [];
+    for (let i = 0; i < 80; i++) {
+        const x = (Math.random() - 0.5) * 200;
+        const y = (Math.random() - 0.5) * 200;
+        const z = (Math.random() - 0.5) * 200;
+        purpleVertices.push(x, y, z);
+    }
+    purpleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(purpleVertices, 3));
+    const purpleMaterial = new THREE.PointsMaterial({ 
+        color: 0x8b5cf6, 
+        size: 2.5,
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending
+    });
+    const purplePoints = new THREE.Points(purpleGeometry, purpleMaterial);
+    pointsGroup.add(purplePoints);
+
+    scene.add(pointsGroup);
+
+    // Linhas conectando pontos
+    const linesGroup = new THREE.Group();
+    
+    function createConnections(vertices1, vertices2, color, opacity) {
+        const lineGeometry = new THREE.BufferGeometry();
+        const lineVertices = [];
+        
+        for (let i = 0; i < vertices1.length; i += 9) {
+            for (let j = 0; j < vertices2.length; j += 9) {
+                const dist = Math.sqrt(
+                    Math.pow(vertices1[i] - vertices2[j], 2) +
+                    Math.pow(vertices1[i+1] - vertices2[j+1], 2) +
+                    Math.pow(vertices1[i+2] - vertices2[j+2], 2)
+                );
+                
+                if (dist < 60 && Math.random() > 0.8) {
+                    lineVertices.push(vertices1[i], vertices1[i+1], vertices1[i+2]);
+                    lineVertices.push(vertices2[j], vertices2[j+1], vertices2[j+2]);
+                }
+            }
+        }
+        
+        if (lineVertices.length > 0) {
+            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lineVertices, 3));
+            const lineMaterial = new THREE.LineBasicMaterial({ 
+                color: color, 
+                opacity: opacity, 
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            linesGroup.add(lines);
+        }
+    }
+
+    // Criar conexões entre diferentes tipos de pontos
+    createConnections(blueVertices, greenVertices, 0x00d4ff, 0.3);
+    createConnections(greenVertices, purpleVertices, 0x00ff88, 0.2);
+    createConnections(blueVertices, purpleVertices, 0x8b5cf6, 0.25);
+
+    scene.add(linesGroup);
+
+    camera.position.set(0, 0, 150);
+
+    // Movimento do mouse
+    let mouseX = 0, mouseY = 0;
+    let targetRotationX = 0, targetRotationY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        
+        targetRotationX = mouseY * 0.1;
+        targetRotationY = mouseX * 0.1;
+    });
+
+    // Animação
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Rotação suave baseada no mouse
+        pointsGroup.rotation.x += (targetRotationX - pointsGroup.rotation.x) * 0.05;
+        pointsGroup.rotation.y += (targetRotationY - pointsGroup.rotation.y) * 0.05;
+        linesGroup.rotation.x += (targetRotationX - linesGroup.rotation.x) * 0.03;
+        linesGroup.rotation.y += (targetRotationY - linesGroup.rotation.y) * 0.03;
+
+        // Rotação contínua automática
+        pointsGroup.rotation.z += 0.001;
+        linesGroup.rotation.z += 0.0008;
+
+        // Pulsação dos pontos
+        const time = Date.now() * 0.001;
+        blueMaterial.opacity = 0.5 + Math.sin(time) * 0.3;
+        greenMaterial.opacity = 0.4 + Math.sin(time + 1) * 0.2;
+        purpleMaterial.opacity = 0.5 + Math.sin(time + 2) * 0.25;
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Responsividade
+    function handleResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup function
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        container.removeChild(renderer.domElement);
+        renderer.dispose();
+    };
+}
+
+// 3D background será inicializado pela função initializeApp()
