@@ -555,12 +555,14 @@ body.light-theme .code-fragment {
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    margin: 1.5rem 0 1rem 0; /* Adicionado margin-top para melhor espaçamento */
-    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2; /* Melhor espaçamento entre linhas */
+    margin: 1.5rem 0 1rem 0;
+    /* Melhorado: texto mais visível com cor sólida e sombra */
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px rgba(0, 212, 255, 0.8),
+        0 0 20px rgba(0, 212, 255, 0.6),
+        0 0 30px rgba(0, 212, 255, 0.4);
+    line-height: 1.2;
 }
 
 .typing-animation {
@@ -588,8 +590,31 @@ body.light-theme .code-fragment {
 }
 
 .highlight {
+    /* Melhorado para melhor visibilidade e destaque */
     color: var(--neon-green);
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 
+        0 0 15px var(--neon-green),
+        0 0 25px var(--neon-green),
+        0 0 35px rgba(0, 255, 127, 0.5);
+    animation: neonGlow 2s ease-in-out infinite alternate;
+}
+
+/* Animação de brilho neon para o nome */
+@keyframes neonGlow {
+    from {
+        text-shadow: 
+            0 0 15px var(--neon-green),
+            0 0 25px var(--neon-green),
+            0 0 35px rgba(0, 255, 127, 0.5);
+    }
+    to {
+        text-shadow: 
+            0 0 20px var(--neon-green),
+            0 0 30px var(--neon-green),
+            0 0 40px var(--neon-green),
+            0 0 50px rgba(0, 255, 127, 0.8);
+    }
 }
 
 .hero-description {
@@ -1156,13 +1181,50 @@ section {
     gap: 2rem;
 }
 
+/* Adicionado fundo borrado para seção Estudando Atualmente */
+.skill-category {
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(124, 58, 237, 0.05));
+    pointer-events: none;
+}
+
+.skill-category:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 212, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
 .skill-category h3 {
-    color: var(--neon-blue);
+    /* Melhorado para melhor visibilidade */
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px var(--neon-blue),
+        0 0 20px var(--neon-blue);
     margin-bottom: 1.5rem;
-    font-size: 1.3rem;
+    font-size: 1.4rem; /* Aumentado para melhor legibilidade */
+    font-weight: 600; /* Fonte mais pesada */
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative; /* Para ficar acima do ::before */
+    z-index: 1;
 }
 
 .skill-category h3::before {
@@ -2341,21 +2403,32 @@ footer {
     color: var(--neon-green);
 }
 
-/* Skills - Studying Items */
+/* Skills - Studying Items - MELHORADO PARA MELHOR VISIBILIDADE */
 .studying-items {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.8rem; /* Aumentado o gap para melhor espaçamento */
+    margin-top: 1rem;
+    position: relative; /* Para ficar acima do fundo borrado */
+    z-index: 1;
 }
 
 .studying-tag {
     background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
+    color: #ffffff; /* Cor branca sólida para melhor contraste */
+    padding: 0.7rem 1.2rem; /* Aumentado o padding para melhor legibilidade */
+    border-radius: 25px;
+    font-size: 0.9rem; /* Aumentado o tamanho da fonte */
+    font-weight: 600; /* Fonte mais pesada para melhor visibilidade */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para melhor contraste */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Borda sutil para destaque */
     animation: pulse 2s infinite;
+    transition: all 0.3s ease;
+}
+
+.studying-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
 }
 
 /* Experience Section */

@@ -3,8 +3,22 @@
 // Vicente Souza - Portfólio Digital
 // ===============================================
 
+// Performance monitor
+let performanceMode = 'normal';
+
+function detectPerformance() {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    
+    // Detectar dispositivos de baixa performance
+    if (!gl || navigator.hardwareConcurrency < 4 || window.innerWidth < 768) {
+        performanceMode = 'low';
+    }
+}
+
 // Inicialização quando DOM carrega
 document.addEventListener('DOMContentLoaded', function() {
+    detectPerformance();
     initDigitalMatrix();
     initThemeToggle();
     initNavigation();
@@ -18,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Sistema Digital Matrix único
+// Sistema Digital Matrix único com otimização de performance
 function initDigitalMatrix() {
     const matrixCanvas = document.getElementById('matrix-canvas');
     const hexCanvas = document.getElementById('hex-canvas');
@@ -29,11 +43,14 @@ function initDigitalMatrix() {
     // Matrix de códigos reais
     initCodeMatrix(matrixCanvas);
     
-    // Hexadecimais flutuantes
-    initHexNumbers(hexCanvas);
-    
-    // Partículas de dados
-    initDataParticles(particlesCanvas);
+    // Apenas carregar outros efeitos se performance for boa
+    if (performanceMode === 'normal') {
+        // Hexadecimais flutuantes
+        initHexNumbers(hexCanvas);
+        
+        // Partículas de dados
+        initDataParticles(particlesCanvas);
+    }
 }
 
 // Matrix de códigos de programação reais
@@ -92,7 +109,20 @@ function initCodeMatrix(canvas) {
         ctx.shadowBlur = 0;
     }
     
-    setInterval(draw, 50);
+    // Otimizado: usar requestAnimationFrame ao invés de setInterval
+    let lastTime = 0;
+    const targetFPS = 30; // Reduzir FPS para melhor performance
+    const interval = 1000 / targetFPS;
+    
+    function animateMatrix(currentTime) {
+        if (currentTime - lastTime >= interval) {
+            draw();
+            lastTime = currentTime;
+        }
+        requestAnimationFrame(animateMatrix);
+    }
+    
+    requestAnimationFrame(animateMatrix);
 }
 
 // Números hexadecimais flutuantes únicos
@@ -146,8 +176,8 @@ function initHexNumbers(canvas) {
         }
     }
     
-    // Criar números hex
-    for (let i = 0; i < 25; i++) {
+    // Reduzir números hex para melhor performance
+    for (let i = 0; i < 15; i++) {
         hexNumbers.push(new HexNumber());
     }
     
@@ -241,15 +271,14 @@ function initDataParticles(canvas) {
                     Math.pow(this.x - particle.x, 2) + Math.pow(this.y - particle.y, 2)
                 );
                 
-                if (distance < 150 && particle !== this) {
+                // Otimizado: reduzir distância de conexão e remover shadow para performance
+                if (distance < 120 && particle !== this) {
                     this.connections.push(particle);
                     
                     ctx.save();
-                    ctx.globalAlpha = (150 - distance) / 150 * 0.3;
+                    ctx.globalAlpha = (120 - distance) / 120 * 0.2;
                     ctx.strokeStyle = this.color;
                     ctx.lineWidth = 1;
-                    ctx.shadowBlur = 5;
-                    ctx.shadowColor = this.color;
                     ctx.beginPath();
                     ctx.moveTo(this.x, this.y);
                     ctx.lineTo(particle.x, particle.y);
@@ -260,8 +289,8 @@ function initDataParticles(canvas) {
         }
     }
     
-    // Criar partículas
-    for (let i = 0; i < 80; i++) {
+    // Reduzir número de partículas para melhor performance
+    for (let i = 0; i < 40; i++) {
         particles.push(new DataParticle());
     }
     
