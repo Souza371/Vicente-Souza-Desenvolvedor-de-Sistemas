@@ -299,16 +299,40 @@ function animateCounter(progressBar, targetPercent) {
 
 // Integração com GitHub API
 async function initGitHubAPI() {
+    console.log('🚀 Iniciando carregamento dos projetos...');
     const username = 'Souza371'; // Seu username do GitHub
     
+    // Primeiro, carregar projetos estáticos como fallback
+    loadStaticProjects();
+    
     try {
+        // Tentar buscar do GitHub com timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
+        
         // Buscar informações do usuário
-        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        const userResponse = await fetch(`https://api.github.com/users/${username}`, {
+            signal: controller.signal
+        });
+        
+        if (!userResponse.ok) {
+            throw new Error(`HTTP error! status: ${userResponse.status}`);
+        }
+        
         const userData = await userResponse.json();
         
         // Buscar repositórios
-        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`, {
+            signal: controller.signal
+        });
+        
+        if (!reposResponse.ok) {
+            throw new Error(`HTTP error! status: ${reposResponse.status}`);
+        }
+        
         const reposData = await reposResponse.json();
+        
+        clearTimeout(timeoutId);
         
         // Atualizar informações no portfólio
         updateGitHubStats(userData, reposData);
@@ -316,7 +340,8 @@ async function initGitHubAPI() {
         
     } catch (error) {
         console.log('Erro ao carregar dados do GitHub:', error);
-        // Continuar sem os dados do GitHub
+        // Manter projetos estáticos se a API falhar
+        console.log('Usando projetos estáticos como fallback');
     }
 }
 
@@ -384,17 +409,30 @@ function updateProjectsFromGitHub(repos) {
     const projectsGrid = document.querySelector('.projects-grid');
     if (!projectsGrid) return;
     
-    // Remover cards de projetos antigos (exceto o primeiro que é destaque)
-    const existingCards = projectsGrid.querySelectorAll('.project-card:not(.featured)');
-    existingCards.forEach(card => card.remove());
+    console.log('GitHub API carregou com sucesso:', relevantRepos.length, 'projetos');
     
-    // Adicionar novos cards do GitHub
-    relevantRepos.forEach((repo, index) => {
-        if (index === 0) return; // Pular o primeiro (já temos o projeto destaque)
+    // Se temos repositórios do GitHub, substituir os estáticos
+    if (relevantRepos.length > 0) {
+        // Limpar container e adicionar novos projetos do GitHub
+        projectsGrid.innerHTML = '';
         
-        const projectCard = createProjectCardFromRepo(repo);
-        projectsGrid.appendChild(projectCard);
-    });
+        // Adicionar todos os cards do GitHub
+        relevantRepos.forEach((repo) => {
+            const projectCard = createProjectCardFromRepo(repo);
+            projectsGrid.appendChild(projectCard);
+        });
+        
+        // Adicionar indicador de que são projetos reais do GitHub
+        const githubIndicator = document.createElement('div');
+        githubIndicator.className = 'github-indicator';
+        githubIndicator.innerHTML = `
+            <div class="github-badge">
+                <i class="fab fa-github"></i>
+                <span>Projetos carregados do GitHub em tempo real</span>
+            </div>
+        `;
+        projectsGrid.appendChild(githubIndicator);
+    }
 }
 
 function createProjectCardFromRepo(repo) {
@@ -404,14 +442,38 @@ function createProjectCardFromRepo(repo) {
     // Determinar linguagens principais
     const languages = repo.language ? [repo.language] : ['Projeto'];
     
+    // Determinar ícone baseado na linguagem
+    const getLanguageIcon = (lang) => {
+        const icons = {
+            'JavaScript': 'fab fa-js-square',
+            'Python': 'fab fa-python',
+            'HTML': 'fab fa-html5',
+            'CSS': 'fab fa-css3-alt',
+            'React': 'fab fa-react',
+            'Vue': 'fab fa-vuejs',
+            'Node': 'fab fa-node-js',
+            'PHP': 'fab fa-php',
+            'Java': 'fab fa-java',
+            'TypeScript': 'fab fa-js-square',
+            'C#': 'fas fa-code',
+            'C++': 'fas fa-code',
+            'Flutter': 'fas fa-mobile-alt',
+            'Dart': 'fas fa-mobile-alt'
+        };
+        return icons[lang] || 'fas fa-code';
+    };
+    
     card.innerHTML = `
         <div class="project-image">
+            <div class="project-icon">
+                <i class="${getLanguageIcon(repo.language)}"></i>
+            </div>
             <div class="project-overlay">
                 <div class="project-links">
-                    <a href="${repo.html_url}" target="_blank" class="project-link" aria-label="Ver no GitHub">
+                    <a href="${repo.html_url}" target="_blank" class="project-link" title="Ver no GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="project-link" aria-label="Ver demo"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                    ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="project-link" title="Ver Demo"><i class="fas fa-external-link-alt"></i></a>` : ''}
                 </div>
             </div>
         </div>
@@ -419,21 +481,116 @@ function createProjectCardFromRepo(repo) {
         <div class="project-content">
             <h3>${repo.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h3>
             <p class="project-description">
-                ${repo.description || 'Projeto desenvolvido para demonstrar habilidades técnicas.'}
+                ${repo.description || 'Sistema desenvolvido para demonstrar habilidades técnicas e boas práticas de programação.'}
             </p>
             
             <div class="project-tech">
-                ${languages.map(lang => `<span>${lang}</span>`).join('')}
-                ${repo.stargazers_count > 0 ? `<span class="stars">⭐ ${repo.stargazers_count}</span>` : ''}
+                ${languages.map(lang => `<span class="tech-tag">${lang}</span>`).join('')}
+                ${repo.stargazers_count > 0 ? `<span class="stars-tag"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>` : ''}
             </div>
             
-            <div class="project-meta">
-                <small>Atualizado: ${new Date(repo.updated_at).toLocaleDateString('pt-BR')}</small>
+            <div class="project-footer">
+                <div class="project-stats">
+                    <span class="stat-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        ${new Date(repo.updated_at).toLocaleDateString('pt-BR')}
+                    </span>
+                    ${repo.size > 0 ? `<span class="stat-item">
+                        <i class="fas fa-database"></i>
+                        ${(repo.size / 1024).toFixed(1)}MB
+                    </span>` : ''}
+                </div>
             </div>
         </div>
     `;
     
     return card;
+}
+
+// Projetos estáticos como fallback
+function loadStaticProjects() {
+    console.log('🔄 Carregando projetos estáticos...');
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (!projectsGrid) {
+        console.log('❌ Elemento .projects-grid não encontrado!');
+        return;
+    }
+    
+    // Remover loading
+    const loading = projectsGrid.querySelector('.loading-projects');
+    if (loading) {
+        loading.remove();
+    }
+    
+    // Projetos de exemplo
+    const staticProjects = [
+        {
+            name: 'Portfólio Profissional',
+            description: 'Site responsivo moderno com animações Matrix, tema escuro e integração com GitHub API.',
+            language: 'JavaScript',
+            html_url: 'https://github.com/Souza371/Vicente-Souza-Desenvolvedor-de-Sistemas',
+            homepage: 'https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/',
+            updated_at: new Date().toISOString(),
+            stargazers_count: 0
+        },
+        {
+            name: 'Sistema de Automação',
+            description: 'Automação web com Selenium para processos repetitivos e web scraping inteligente.',
+            language: 'Python',
+            html_url: '#',
+            homepage: null,
+            updated_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+            stargazers_count: 2
+        },
+        {
+            name: 'Calculadora IMC',
+            description: 'Aplicação web interativa para cálculo de IMC com validações e design responsivo.',
+            language: 'JavaScript',
+            html_url: '#',
+            homepage: '#',
+            updated_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+            stargazers_count: 1
+        },
+        {
+            name: 'Sistema CRM Modular',
+            description: 'Sistema de gerenciamento de clientes com módulos para vendas, contatos e relatórios.',
+            language: 'HTML',
+            html_url: '#',
+            homepage: null,
+            updated_at: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
+            stargazers_count: 3
+        },
+        {
+            name: 'Game Interativo',
+            description: 'Jogo desenvolvido com JavaScript puro, física simples e controles responsivos.',
+            language: 'JavaScript',
+            html_url: '#',
+            homepage: '#',
+            updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+            stargazers_count: 5
+        },
+        {
+            name: 'App Flutter Mobile',
+            description: 'Aplicativo mobile multiplataforma com interface moderna e funcionalidades nativas.',
+            language: 'Flutter',
+            html_url: '#',
+            homepage: null,
+            updated_at: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
+            stargazers_count: 1
+        }
+    ];
+    
+    // Limpar grid
+    projectsGrid.innerHTML = '';
+    
+    // Adicionar projetos estáticos
+    staticProjects.forEach((project, index) => {
+        const projectCard = createProjectCardFromRepo(project);
+        projectsGrid.appendChild(projectCard);
+        console.log(`✅ Projeto ${index + 1} adicionado: ${project.name}`);
+    });
+    
+    console.log('🎉 Projetos estáticos carregados com sucesso!');
 }
 
 // Sistema de Blog e Filtros

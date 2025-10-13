@@ -475,41 +475,94 @@ function initContactForm() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Mostrar loading
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
-        // Simular envio (implementar com seu backend)
         try {
-            console.log('Dados do formulário:', data);
+            // Usando Formspree (serviço gratuito de formulários)
+            const response = await fetch('https://formspree.io/f/xpwaqnlr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    message: data.message,
+                    _replyto: data.email,
+                    _subject: `Novo contato do portfólio - ${data.name}`
+                })
+            });
             
-            // Mostrar mensagem de sucesso
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.textContent = 'Mensagem enviada com sucesso!';
-            successMessage.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(45deg, #00ffff, #ff00ff);
-                color: white;
-                padding: 1rem;
-                border-radius: 8px;
-                box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-                z-index: 10000;
-            `;
-            
-            document.body.appendChild(successMessage);
-            
-            setTimeout(() => {
-                successMessage.remove();
-            }, 3000);
-            
-            form.reset();
+            if (response.ok) {
+                // Sucesso real
+                showMessage('✅ Mensagem enviada com sucesso! Responderei em breve.', 'success');
+                form.reset();
+            } else {
+                throw new Error('Erro no servidor');
+            }
             
         } catch (error) {
             console.error('Erro ao enviar mensagem:', error);
+            
+            // Fallback: abrir cliente de email
+            const subject = encodeURIComponent('Contato do Portfólio');
+            const body = encodeURIComponent(`Nome: ${data.name}\nEmail: ${data.email}\n\nMensagem:\n${data.message}`);
+            const mailtoLink = `mailto:vicenteesouza371@gmail.com?subject=${subject}&body=${body}`;
+            
+            showMessage('⚠️ Erro no envio automático. Abrindo seu cliente de e-mail...', 'warning');
+            
+            setTimeout(() => {
+                window.open(mailtoLink, '_blank');
+            }, 1000);
+        } finally {
+            // Restaurar botão
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     });
+}
+
+// Função para mostrar mensagens
+function showMessage(text, type = 'success') {
+    const message = document.createElement('div');
+    message.className = `contact-message ${type}`;
+    message.textContent = text;
+    
+    const colors = {
+        success: 'linear-gradient(45deg, #00ff88, #00ffff)',
+        error: 'linear-gradient(45deg, #ff4444, #ff0066)',
+        warning: 'linear-gradient(45deg, #ffaa00, #ff6600)'
+    };
+    
+    message.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${colors[type] || colors.success};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        z-index: 10000;
+        font-weight: 600;
+        max-width: 400px;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+    }, 5000);
 }
 
 // Efeitos especiais únicos

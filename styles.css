@@ -617,6 +617,29 @@ body.light-theme .code-fragment {
     }
 }
 
+/* Animações para mensagens de contato */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
 .hero-description {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -1472,6 +1495,126 @@ section {
     border-radius: 4px;
     font-size: 0.9rem;
     font-family: var(--font-code);
+}
+
+/* Novos estilos para os projetos do GitHub */
+.project-icon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+}
+
+.project-icon i {
+    font-size: 2rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.tech-tag {
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)) !important;
+    color: white !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stars-tag {
+    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+    color: #000 !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+}
+
+.stars-tag i {
+    margin-right: 4px;
+}
+
+.project-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.stat-item i {
+    color: var(--neon-blue);
+}
+
+/* Loading e estado vazio */
+.loading-projects {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.loading-projects i {
+    font-size: 2rem;
+    color: var(--neon-blue);
+    margin-bottom: 1rem;
+}
+
+.no-projects {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    grid-column: 1 / -1;
+}
+
+.no-projects i {
+    font-size: 3rem;
+    color: var(--neon-blue);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Indicador do GitHub */
+.github-indicator {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.github-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 25px;
+    padding: 0.8rem 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+}
+
+.github-badge:hover {
+    border-color: var(--neon-blue);
+    transform: translateY(-2px);
+}
+
+.github-badge i {
+    color: var(--neon-blue);
+    font-size: 1.2rem;
 }
 
 .more-projects {
