@@ -24,6 +24,11 @@
     <!-- Three.js -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     
+    <!-- Analytics -->
+    <script src="analytics.js"></script>
+    <script src="privacy-banner.js"></script>
+    <script src="notifications.js"></script>
+    
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
     
@@ -67,6 +72,9 @@
             </ul>
             
             <div class="nav-controls">
+                <a href="admin.html" class="admin-link" id="adminLink" title="Painel Administrativo" style="color: #00d4ff; margin-right: 15px; font-size: 18px; opacity: 0; transition: opacity 0.3s ease; display: none;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                    <i class="fas fa-chart-line"></i>
+                </a>
                 <button class="theme-toggle" id="themeToggle" title="Alternar tema">
                     <i class="fas fa-moon"></i>
                 </button>

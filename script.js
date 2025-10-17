@@ -19,6 +19,7 @@ function initializeApp() {
     initContactForm();
     initPWA();
     initAnalytics();
+    initAdminAccess();
     
     // Remover preloader após carregamento
     setTimeout(() => {
@@ -1924,6 +1925,87 @@ function initProfessionalBackground() {
             element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         }
     });
+}
+
+// Sistema de acesso administrativo secreto
+function initAdminAccess() {
+    let keySequence = [];
+    let adminVisible = false;
+    
+    document.addEventListener('keydown', function(e) {
+        keySequence.push(e.key);
+        
+        // Manter apenas as últimas 5 teclas
+        if (keySequence.length > 5) {
+            keySequence.shift();
+        }
+        
+        // Combinação: Ctrl+Alt+A (ou sequência especial)
+        if ((e.ctrlKey && e.altKey && e.key === 'a') || 
+            keySequence.join('').toLowerCase().includes('admin')) {
+            
+            const adminLink = document.getElementById('adminLink');
+            if (adminLink && !adminVisible) {
+                adminLink.style.display = 'inline-block';
+                setTimeout(() => {
+                    adminLink.style.opacity = '0.7';
+                }, 100);
+                
+                adminVisible = true;
+                
+                // Mostrar notificação discreta
+                showAdminNotification('Acesso administrativo ativado');
+                
+                // Ocultar novamente após 30 segundos se não usado
+                setTimeout(() => {
+                    if (adminVisible) {
+                        adminLink.style.opacity = '0';
+                        setTimeout(() => {
+                            adminLink.style.display = 'none';
+                            adminVisible = false;
+                        }, 300);
+                    }
+                }, 30000);
+            }
+        }
+    });
+}
+
+function showAdminNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 212, 255, 0.9);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 212, 255, 0.3);
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Fade in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    
+    // Fade out e remover
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
 }
 
 // Professional background será inicializado pela função initializeApp()
