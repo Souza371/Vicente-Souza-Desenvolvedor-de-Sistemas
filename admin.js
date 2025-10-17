@@ -79,26 +79,24 @@ class AdminPanel {
 
         container.innerHTML = sortedVisitors.map(visitor => `
             <div class="visitor-item" data-visitor='${JSON.stringify(visitor)}'>
-                <div>
-                    <div class="visitor-time">
-                        ${this.formatDateTime(visitor.timestamp)}
-                    </div>
-                </div>
-                <div>
-                    <div class="visitor-ip">${visitor.ip || 'N/A'}</div>
-                    <div class="visitor-location">
+                <span data-label="Data/Hora">
+                    ${this.formatDateTime(visitor.timestamp)}
+                </span>
+                <span data-label="IP/Localização">
+                    <div>${visitor.ip || 'N/A'}</div>
+                    <div style="font-size: 0.9em; color: #888;">
                         ${this.formatLocation(visitor.location)}
                     </div>
-                </div>
-                <div class="visitor-browser">
+                </span>
+                <span data-label="Navegador" class="visitor-browser">
                     ${this.formatBrowser(visitor.userAgent)}
-                </div>
-                <div>
+                </span>
+                <span data-label="Página">
                     ${visitor.page || '/'}
-                </div>
-                <div class="visitor-duration">
+                </span>
+                <span data-label="Duração" class="visitor-duration">
                     ${this.formatDuration(visitor.duration)}
-                </div>
+                </span>
             </div>
         `).join('');
     }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ CONEXÃO MOBILE FUNCIONANDO!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: linear-gradient(135deg, #00ff00 0%, #008800 100%);
+            color: #000;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+        .success {
+            background: #fff;
+            color: #008800;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .info {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .big-title {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .links {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .link-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="big-title">🎉 SUCESSO!</div>
+    
+    <div class="success">
+        ✅ CONEXÃO MOBILE FUNCIONANDO!<br>
+        🚀 Servidor alcançado com sucesso!
+    </div>
+
+    <div class="info">
+        <h3>� Informações da Conexão:</h3>
+        <p><strong>🌐 URL Atual:</strong> <span id="currentURL"></span></p>
+        <p><strong>📱 Dispositivo:</strong> <span id="deviceInfo"></span></p>
+        <p><strong>🖥️ Tela:</strong> <span id="screenInfo"></span></p>
+        <p><strong>⏰ Hora:</strong> <span id="timeInfo"></span></p>
+        <p><strong>🔗 IP Conectado:</strong> <span id="ipInfo"></span></p>
+    </div>
+
+    <div class="links">
+        <h3>🔗 Próximos Passos - Clique nos botões:</h3>
+        
+        <div class="link-item">
+            <strong>1️⃣ PAINEL SIMPLES (Recomendado)</strong><br>
+            <a href="/simples-admin.html" class="btn">📱 Abrir Painel Simples</a>
+        </div>
+        
+        <div class="link-item">
+            <strong>2️⃣ PAINEL COMPLETO</strong><br>
+            <a href="/mobile-admin.html" class="btn">📊 Abrir Painel Completo</a>
+        </div>
+        
+        <div class="link-item">
+            <strong>3️⃣ SITE PRINCIPAL</strong><br>
+            <a href="/" class="btn">🏠 Ver Site Principal</a>
+        </div>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; margin: 20px 0;">
+        <h3>🔑 Credenciais para os Painéis:</h3>
+        <p style="font-family: monospace; font-size: 1.1rem; color: #007bff;">
+            <strong>Usuário:</strong> vicente371<br>
+            <strong>Senha:</strong> Abacaxi371@
+        </p>
+    </div>
+
+    <div style="background: rgba(0,255,0,0.2); padding: 15px; border-radius: 10px; margin: 20px 0;">
+        <h3>✅ Diagnóstico:</h3>
+        <p>🟢 Servidor: ONLINE</p>
+        <p>🟢 Conectividade: OK</p>
+        <p>🟢 Mobile: COMPATÍVEL</p>
+        <p>🟢 Pronto para usar!</p>
+    </div>
+
+    <script>
+        // Preencher informações
+        document.getElementById('currentURL').textContent = window.location.href;
+        document.getElementById('deviceInfo').textContent = /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? '📱 Mobile' : '💻 Desktop';
+        document.getElementById('screenInfo').textContent = screen.width + 'x' + screen.height;
+        document.getElementById('timeInfo').textContent = new Date().toLocaleString('pt-BR');
+        document.getElementById('ipInfo').textContent = window.location.hostname + ':' + window.location.port;
+
+        // Registrar sucesso
+        const testData = {
+            success: true,
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            screen: screen.width + 'x' + screen.height,
+            timestamp: new Date().toISOString(),
+            ip: window.location.hostname
+        };
+
+        console.log('✅ Teste Mobile Sucesso:', testData);
+        
+        // Salvar resultado
+        localStorage.setItem('mobile_test_success', JSON.stringify(testData));
+        
+        // Notificar que o teste funcionou
+        if ('serviceWorker' in navigator) {
+            console.log('✅ Service Worker suportado');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Simples - Vicente</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #000 0%, #222 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,200,255,0.1);
+            border-radius: 10px;
+            border: 2px solid #00c8ff;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            color: #00c8ff;
+            margin-bottom: 5px;
+        }
+        
+        .login-box, .admin-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,200,255,0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,200,255,0.3);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00c8ff, #0080ff);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            background: rgba(0,200,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0,200,255,0.3);
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00c8ff;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        
+        .visitor {
+            background: rgba(255,255,255,0.03);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 3px solid #00c8ff;
+        }
+        
+        .visitor-time {
+            font-weight: 500;
+            color: #00c8ff;
+            font-size: 0.9rem;
+        }
+        
+        .visitor-info {
+            color: #ccc;
+            font-size: 0.8rem;
+            margin-top: 3px;
+        }
+        
+        .error {
+            background: rgba(255,0,0,0.1);
+            color: #ff6b6b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,0,0,0.3);
+        }
+        
+        .hidden { display: none; }
+        
+        .status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-small {
+            flex: 1;
+            padding: 8px;
+            background: rgba(0,200,255,0.2);
+            border: 1px solid #00c8ff;
+            border-radius: 5px;
+            color: #00c8ff;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="status"></div>
+    
+    <div class="header">
+        <h1>📊 Admin Mobile</h1>
+        <p>Monitoramento Simplificado</p>
+    </div>
+
+    <!-- Login -->
+    <div id="loginSection">
+        <div class="login-box">
+            <h2 style="margin-bottom: 15px; color: #00c8ff;">🔐 Login</h2>
+            <div id="errorMsg" class="error hidden"></div>
+            
+            <div class="form-group">
+                <label>Usuário:</label>
+                <input type="text" id="username" placeholder="vicente371" value="vicente371">
+            </div>
+            
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" id="password" placeholder="Sua senha">
+            </div>
+            
+            <button class="btn" onclick="login()">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminSection" class="hidden">
+        <div class="controls">
+            <button class="btn-small" onclick="refresh()">🔄 Atualizar</button>
+            <button class="btn-small" onclick="exportData()">💾 Exportar</button>
+            <button class="btn-small" onclick="logout()">🚪 Sair</button>
+        </div>
+
+        <div class="stats" id="stats">
+            <!-- Stats aqui -->
+        </div>
+
+        <div class="admin-box">
+            <h3 style="margin-bottom: 15px; color: #00c8ff;">👥 Visitantes Recentes</h3>
+            <div id="visitors">
+                <!-- Visitantes aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de autenticação simples
+        const AUTH = {
+            user: 'vicente371',
+            pass: 'Abacaxi371@',
+            token: null
+        };
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const error = document.getElementById('errorMsg');
+
+            if (user === AUTH.user && pass === AUTH.pass) {
+                AUTH.token = 'authenticated';
+                localStorage.setItem('auth_token', AUTH.token);
+                showAdmin();
+                error.classList.add('hidden');
+            } else {
+                error.textContent = 'Usuário ou senha incorretos!';
+                error.classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            AUTH.token = null;
+            localStorage.removeItem('auth_token');
+            showLogin();
+        }
+
+        function showLogin() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('adminSection').classList.add('hidden');
+        }
+
+        function showAdmin() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('adminSection').classList.remove('hidden');
+            loadData();
+        }
+
+        function loadData() {
+            const visitors = JSON.parse(localStorage.getItem('portfolio_visitors') || '[]');
+            updateStats(visitors);
+            updateVisitors(visitors);
+        }
+
+        function updateStats(visitors) {
+            const today = new Date().toDateString();
+            const todayCount = visitors.filter(v => 
+                new Date(v.timestamp).toDateString() === today
+            ).length;
+            
+            const uniqueIPs = new Set(visitors.map(v => v.ip)).size;
+
+            document.getElementById('stats').innerHTML = `
+                <div class="stat">
+                    <div class="stat-number">${visitors.length}</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">${todayCount}</div>
+                    <div class="stat-label">Hoje</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">${uniqueIPs}</div>
+                    <div class="stat-label">Únicos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">${visitors.length > 0 ? Math.round((visitors.length / Math.max(1, Math.ceil((Date.now() - new Date(visitors[0].timestamp)) / (1000 * 60 * 60 * 24)))) * 10) / 10 : 0}</div>
+                    <div class="stat-label">Por Dia</div>
+                </div>
+            `;
+        }
+
+        function updateVisitors(visitors) {
+            const recent = visitors
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .slice(0, 10);
+
+            if (recent.length === 0) {
+                document.getElementById('visitors').innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #888;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">📈</div>
+                        <div>Nenhum visitante ainda</div>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('visitors').innerHTML = recent.map(v => `
+                <div class="visitor">
+                    <div class="visitor-time">${formatTime(v.timestamp)}</div>
+                    <div class="visitor-info">
+                        ${formatLocation(v.location)} • ${formatDevice(v.userAgent)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatTime(timestamp) {
+            return new Date(timestamp).toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatLocation(location) {
+            if (!location) return 'Local desconhecido';
+            const parts = [];
+            if (location.city) parts.push(location.city);
+            if (location.country) parts.push(location.country);
+            return parts.join(', ') || 'Local desconhecido';
+        }
+
+        function formatDevice(userAgent) {
+            if (!userAgent) return 'Dispositivo desconhecido';
+            if (userAgent.includes('Mobile')) return '📱 Mobile';
+            if (userAgent.includes('Tablet')) return '📱 Tablet';
+            return '💻 Desktop';
+        }
+
+        function refresh() {
+            loadData();
+        }
+
+        function exportData() {
+            const data = localStorage.getItem('portfolio_visitors') || '[]';
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'visitantes.json';
+            a.click();
+        }
+
+        // Auto-refresh a cada 10 segundos
+        setInterval(() => {
+            if (AUTH.token && !document.getElementById('adminSection').classList.contains('hidden')) {
+                loadData();
+            }
+        }, 10000);
+
+        // Verificar auth ao carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('auth_token');
+            if (token === 'authenticated') {
+                AUTH.token = token;
+                showAdmin();
+            } else {
+                showLogin();
+            }
+        });
+
+        // Permitir login com Enter
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !document.getElementById('loginSection').classList.contains('hidden')) {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>

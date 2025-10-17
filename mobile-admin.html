@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Painel Mobile - Vicente Souza</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .mobile-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        .mobile-header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #00d4ff, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .mobile-header p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-form h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px; /* Evita zoom no iOS */
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00d4ff, #8b5cf6);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .mobile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-stat-card i {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 8px;
+        }
+
+        .mobile-stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .mobile-stat-card p {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .mobile-visitors {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-visitors h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .mobile-visitor-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #00d4ff;
+        }
+
+        .visitor-info {
+            margin-bottom: 8px;
+        }
+
+        .visitor-label {
+            font-weight: 600;
+            color: #00d4ff;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+
+        .visitor-value {
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .error-msg {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            border-radius: 5px;
+            color: #00d4ff;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00d4ff;
+            animation: pulse 2s infinite;
+            z-index: 1000;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator"></div>
+    
+    <div class="mobile-header">
+        <h1><i class="fas fa-chart-line"></i> Admin Mobile</h1>
+        <p>Monitoramento em tempo real</p>
+    </div>
+
+    <!-- Formulário de Login -->
+    <div id="loginSection" class="login-form">
+        <h2><i class="fas fa-lock"></i> Acesso Seguro</h2>
+        <div id="errorMsg" class="error-msg hidden"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+        </form>
+    </div>
+
+    <!-- Painel Administrativo -->
+    <div id="adminPanel" class="hidden">
+        <div class="controls">
+            <button class="control-btn" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+            <button class="control-btn" onclick="exportData()">
+                <i class="fas fa-download"></i> Exportar
+            </button>
+            <button class="control-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+
+        <div class="mobile-stats" id="statsGrid">
+            <!-- Stats serão inseridas aqui -->
+        </div>
+
+        <div class="mobile-visitors">
+            <h2><i class="fas fa-users"></i> Visitantes Recentes</h2>
+            <div id="mobileVisitorsList">
+                <!-- Visitantes serão inseridos aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        class MobileAdminPanel {
+            constructor() {
+                this.visitors = [];
+                this.auth = new AdminAuth();
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.checkAuthStatus();
+                this.startAutoRefresh();
+            }
+
+            setupEventListeners() {
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+            }
+
+            async handleLogin() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const errorMsg = document.getElementById('errorMsg');
+
+                try {
+                    const success = await this.auth.login(username, password);
+                    
+                    if (success) {
+                        document.getElementById('loginSection').classList.add('hidden');
+                        document.getElementById('adminPanel').classList.remove('hidden');
+                        this.loadData();
+                        errorMsg.classList.add('hidden');
+                    } else {
+                        errorMsg.textContent = 'Usuário ou senha inválidos!';
+                        errorMsg.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    errorMsg.textContent = 'Erro ao fazer login. Tente novamente.';
+                    errorMsg.classList.remove('hidden');
+                }
+            }
+
+            checkAuthStatus() {
+                if (this.auth.isAuthenticated()) {
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    this.loadData();
+                }
+            }
+
+            loadData() {
+                this.visitors = JSON.parse(localStorage.getItem('portfolio_visitors') || '[]');
+                this.updateStats();
+                this.renderVisitors();
+            }
+
+            updateStats() {
+                const today = new Date().toDateString();
+                const todayVisitors = this.visitors.filter(v => 
+                    new Date(v.timestamp).toDateString() === today
+                ).length;
+
+                const uniqueVisitors = new Set(this.visitors.map(v => v.ip)).size;
+                
+                const avgDuration = this.calculateAverageDuration();
+
+                const statsHTML = `
+                    <div class="mobile-stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>${this.visitors.length}</h3>
+                        <p>Total</p>
+                    </div>
+                    <div class="mobile-stat-card">
+                        <i class="fas fa-calendar-day"></i>
+                        <h3>${todayVisitors}</h3>
+                        <p>Hoje</p>
+                    </div>
+                    <div class="mobile-stat-card">
+                        <i class="fas fa-user-check"></i>
+                        <h3>${uniqueVisitors}</h3>
+                        <p>Únicos</p>
+                    </div>
+                    <div class="mobile-stat-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>${avgDuration}</h3>
+                        <p>Tempo Médio</p>
+                    </div>
+                `;
+
+                document.getElementById('statsGrid').innerHTML = statsHTML;
+            }
+
+            calculateAverageDuration() {
+                const validDurations = this.visitors
+                    .map(v => v.duration)
+                    .filter(d => d && d > 0);
+
+                if (validDurations.length === 0) return '0min';
+
+                const avgSeconds = validDurations.reduce((a, b) => a + b, 0) / validDurations.length;
+                const minutes = Math.round(avgSeconds / 60);
+                return `${minutes}min`;
+            }
+
+            renderVisitors() {
+                const container = document.getElementById('mobileVisitorsList');
+                
+                if (this.visitors.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 20px; color: #888;">
+                            <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>Nenhum visitante ainda</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const recentVisitors = this.visitors
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                    .slice(0, 10);
+
+                container.innerHTML = recentVisitors.map(visitor => `
+                    <div class="mobile-visitor-item">
+                        <div class="visitor-info">
+                            <div class="visitor-label">Data/Hora</div>
+                            <div class="visitor-value">${this.formatDateTime(visitor.timestamp)}</div>
+                        </div>
+                        <div class="visitor-info">
+                            <div class="visitor-label">Localização</div>
+                            <div class="visitor-value">${this.formatLocation(visitor.location)}</div>
+                        </div>
+                        <div class="visitor-info">
+                            <div class="visitor-label">Dispositivo</div>
+                            <div class="visitor-value">${this.formatBrowser(visitor.userAgent)}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            formatDateTime(timestamp) {
+                const date = new Date(timestamp);
+                return date.toLocaleString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            formatLocation(location) {
+                if (!location) return 'Localização não disponível';
+                
+                const parts = [];
+                if (location.city) parts.push(location.city);
+                if (location.country) parts.push(location.country);
+                
+                return parts.length > 0 ? parts.join(', ') : 'Localização não disponível';
+            }
+
+            formatBrowser(userAgent) {
+                if (!userAgent) return 'Desconhecido';
+                
+                if (userAgent.includes('Mobile')) return 'Mobile';
+                if (userAgent.includes('Chrome')) return 'Chrome';
+                if (userAgent.includes('Firefox')) return 'Firefox';
+                if (userAgent.includes('Safari')) return 'Safari';
+                if (userAgent.includes('Edge')) return 'Edge';
+                
+                return 'Outro';
+            }
+
+            startAutoRefresh() {
+                setInterval(() => {
+                    if (this.auth.isAuthenticated()) {
+                        this.loadData();
+                    }
+                }, 10000); // Atualiza a cada 10 segundos
+            }
+        }
+
+        // Funções globais para os botões
+        function refreshData() {
+            if (window.mobilePanel) {
+                window.mobilePanel.loadData();
+            }
+        }
+
+        function exportData() {
+            const data = JSON.stringify(JSON.parse(localStorage.getItem('portfolio_visitors') || '[]'), null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'visitantes.json';
+            a.click();
+        }
+
+        function logout() {
+            if (window.mobilePanel) {
+                window.mobilePanel.auth.logout();
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('adminPanel').classList.add('hidden');
+            }
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            window.mobilePanel = new MobileAdminPanel();
+        });
+    </script>
+</body>
+</html>

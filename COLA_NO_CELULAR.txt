@@ -1,0 +1,25 @@
+🔗 COPIE ESTES LINKS E COLE NO NAVEGADOR DO CELULAR:
+
+🧪 TESTE PRIMEIRO (Cole este no celular):
+http://192.168.56.1:8080/teste-mobile.html
+
+📱 PAINEL ADMIN (Depois cole este):
+http://192.168.56.1:8080/simples-admin.html
+
+🔑 CREDENCIAIS:
+Usuário: vicente371
+Senha: Abacaxi371@
+
+⚠️ SE NÃO FUNCIONAR, TESTE ESTE IP:
+http://172.20.48.106:8080/teste-mobile.html
+
+📋 PASSO A PASSO:
+1. Conecte o celular no mesmo WiFi do computador
+2. Abra o navegador do celular 
+3. Digite ou cole o link do TESTE
+4. Se aparecer "SUCESSO" = funcionou!
+5. Use o link do PAINEL ADMIN
+
+🆘 SOLUÇÃO DE EMERGÊNCIA:
+Se nada funcionar, pode ser o firewall do Windows bloqueando.
+No computador, desative temporariamente o firewall e teste novamente.
