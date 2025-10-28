@@ -298,7 +298,7 @@ function animateCounter(progressBar, targetPercent) {
     }, 20);
 }
 
-// Integração com GitHub API
+// Integração com GitHub API (Melhorada com fallback para arquivo local)
 async function initGitHubAPI() {
     console.log('🚀 Iniciando carregamento dos projetos...');
     const username = 'Souza371'; // Seu username do GitHub
@@ -306,8 +306,17 @@ async function initGitHubAPI() {
     // Primeiro, carregar projetos estáticos como fallback
     loadStaticProjects();
     
+    // Tentar carregar dados do arquivo local primeiro (mais rápido)
+    const localData = await loadGitHubDataFromFile();
+    
+    if (localData) {
+        console.log('📊 Usando dados atualizados do arquivo local');
+        updateProjectsFromGitHub(localData.repositories);
+        return; // Se temos dados locais, não precisa da API
+    }
+    
     try {
-        // Tentar buscar do GitHub com timeout
+        // Se não temos dados locais, buscar da API com timeout
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
         
@@ -339,10 +348,12 @@ async function initGitHubAPI() {
         updateGitHubStats(userData, reposData);
         updateProjectsFromGitHub(reposData);
         
+        console.log('✅ Dados carregados diretamente da API do GitHub');
+        
     } catch (error) {
-        console.log('Erro ao carregar dados do GitHub:', error);
+        console.log('❌ Erro ao carregar dados do GitHub:', error);
         // Manter projetos estáticos se a API falhar
-        console.log('Usando projetos estáticos como fallback');
+        console.log('🔄 Usando projetos estáticos como fallback');
     }
 }
 
@@ -1473,7 +1484,7 @@ function initNewSectionsAnimations() {
 async function updateGitHubInfo() {
     try {
         const response = await fetch('https://api.github.com/users/Souza371');
-        const userData = response.json();
+        const userData = await response.json(); // ✅ CORRIGIDO: Adicionado await
         
         if (userData) {
             // Atualizar contadores se necessário
@@ -1484,6 +1495,54 @@ async function updateGitHubInfo() {
         }
     } catch (error) {
         console.log('Info do GitHub será mantida estática');
+    }
+}
+
+// Função para carregar dados do arquivo JSON local (fallback mais rápido)
+async function loadGitHubDataFromFile() {
+    try {
+        const response = await fetch('./github-data.json');
+        const data = await response.json();
+        
+        console.log('📊 Dados do GitHub carregados do arquivo local!');
+        
+        // Atualizar estatísticas na página
+        updateStatsFromData(data);
+        
+        return data;
+    } catch (error) {
+        console.log('Arquivo github-data.json não encontrado, usando API');
+        return null;
+    }
+}
+
+// Função para atualizar estatísticas com os dados
+function updateStatsFromData(data) {
+    // Atualizar contadores no HTML
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach((element, index) => {
+        switch(index) {
+            case 0: // Repositórios
+                element.textContent = `${data.user.public_repos}+`;
+                break;
+            case 1: // Projetos em Destaque  
+                element.textContent = `${Math.min(data.repositories.length, 12)}+`;
+                break;
+            case 2: // Linguagens
+                element.textContent = `${data.stats.languages_count}+`;
+                break;
+            case 3: // Stars Total
+                element.textContent = `${data.stats.total_stars}`;
+                break;
+        }
+    });
+    
+    // Atualizar última atualização
+    const lastUpdate = new Date(data.last_updated).toLocaleDateString('pt-BR');
+    const updateElement = document.querySelector('.last-update');
+    if (updateElement) {
+        updateElement.textContent = `Última atualização: ${lastUpdate}`;
     }
 }
 

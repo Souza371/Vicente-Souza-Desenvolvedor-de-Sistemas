@@ -1,0 +1,118 @@
+name: 🚀 Update Portfolio Automatically
+
+on:
+  schedule:
+    # Atualiza diariamente às 00:00 UTC (21:00 Brasília)
+    - cron: '0 0 * * *'
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Permite executar manualmente
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 📊 Fetch GitHub Stats
+      uses: actions/github-script@v7
+      with:
+        script: |
+          // Buscar dados do usuário
+          const userResponse = await github.rest.users.getByUsername({
+            username: 'Souza371'
+          });
+          
+          // Buscar repositórios
+          const reposResponse = await github.rest.repos.listForUser({
+            username: 'Souza371',
+            sort: 'updated',
+            per_page: 100
+          });
+          
+          const userData = userResponse.data;
+          const repos = reposResponse.data;
+          
+          // Calcular estatísticas
+          const publicRepos = userData.public_repos;
+          const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+          const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
+          const languages = [...new Set(repos.map(repo => repo.language).filter(Boolean))];
+          
+          // Criar arquivo JSON com dados atualizados
+          const stats = {
+            user: {
+              login: userData.login,
+              name: userData.name,
+              bio: userData.bio,
+              public_repos: publicRepos,
+              followers: userData.followers,
+              following: userData.following,
+              created_at: userData.created_at,
+              updated_at: userData.updated_at
+            },
+            stats: {
+              total_stars: totalStars,
+              total_forks: totalForks,
+              languages_count: languages.length,
+              languages: languages.slice(0, 10)
+            },
+            repositories: repos.slice(0, 12).map(repo => ({
+              name: repo.name,
+              description: repo.description,
+              html_url: repo.html_url,
+              homepage: repo.homepage,
+              language: repo.language,
+              stargazers_count: repo.stargazers_count,
+              forks_count: repo.forks_count,
+              updated_at: repo.updated_at,
+              topics: repo.topics || []
+            })),
+            last_updated: new Date().toISOString()
+          };
+          
+          // Salvar no arquivo
+          const fs = require('fs');
+          fs.writeFileSync('github-data.json', JSON.stringify(stats, null, 2));
+          
+          console.log('✅ Dados do GitHub atualizados!');
+          console.log(`📊 ${publicRepos} repositórios, ${totalStars} stars, ${languages.length} linguagens`);
+    
+    - name: 🔄 Update HTML with new data
+      run: |
+        # Atualizar data de última atualização no README
+        sed -i "s/Última atualização:.*/Última atualização: $(date +'%d\/%m\/%Y %H:%M')/" README.md || true
+        
+        echo "📝 Dados atualizados com sucesso!"
+    
+    - name: 📤 Commit and Push Changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Verificar se há mudanças
+        if git diff --exit-code github-data.json > /dev/null; then
+          echo "📊 Nenhuma mudança nos dados do GitHub"
+        else
+          git add github-data.json README.md
+          git commit -m "🤖 Auto-update: GitHub data $(date +'%Y-%m-%d %H:%M')"
+          git push
+          echo "✅ Portfolio atualizado automaticamente!"
+        fi
+    
+    - name: 🌐 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        
+    - name: 📱 Send Notification (opcional)
+      if: success()
+      run: |
+        echo "🎉 Portfolio atualizado com sucesso!"
+        echo "🔗 Acesse: https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/"

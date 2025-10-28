@@ -1,0 +1,41 @@
+{
+  "user": {
+    "login": "Souza371",
+    "name": "Vicente Souza",
+    "bio": "Desenvolvedor de Sistemas | Python, JavaScript, PHP",
+    "public_repos": 75,
+    "followers": 12,
+    "following": 25,
+    "created_at": "2024-01-15T00:00:00Z",
+    "updated_at": "2024-10-28T00:00:00Z"
+  },
+  "stats": {
+    "total_stars": 45,
+    "total_forks": 18,
+    "languages_count": 8,
+    "languages": [
+      "JavaScript",
+      "Python", 
+      "PHP",
+      "HTML",
+      "CSS",
+      "Java",
+      "C#",
+      "SQL"
+    ]
+  },
+  "repositories": [
+    {
+      "name": "Vicente-Souza-Desenvolvedor-de-Sistemas",
+      "description": "Portfólio profissional moderno e interativo",
+      "html_url": "https://github.com/Souza371/Vicente-Souza-Desenvolvedor-de-Sistemas",
+      "homepage": "https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/",
+      "language": "JavaScript",
+      "stargazers_count": 8,
+      "forks_count": 2,
+      "updated_at": "2024-10-28T00:00:00Z",
+      "topics": ["portfolio", "javascript", "html", "css"]
+    }
+  ],
+  "last_updated": "2024-10-28T12:00:00.000Z"
+}
