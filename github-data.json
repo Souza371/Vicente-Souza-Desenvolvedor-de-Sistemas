@@ -2,40 +2,163 @@
   "user": {
     "login": "Souza371",
     "name": "Vicente Souza",
-    "bio": "Desenvolvedor de Sistemas | Python, JavaScript, PHP",
-    "public_repos": 75,
-    "followers": 12,
-    "following": 25,
-    "created_at": "2024-01-15T00:00:00Z",
-    "updated_at": "2024-10-28T00:00:00Z"
+    "bio": null,
+    "public_repos": 76,
+    "followers": 0,
+    "following": 2,
+    "created_at": "2024-06-24T23:57:41Z",
+    "updated_at": "2025-10-07T23:28:52Z"
   },
   "stats": {
-    "total_stars": 45,
-    "total_forks": 18,
-    "languages_count": 8,
+    "total_stars": 11,
+    "total_forks": 1,
+    "languages_count": 10,
     "languages": [
       "JavaScript",
-      "Python", 
-      "PHP",
-      "HTML",
+      "Kotlin",
+      "TypeScript",
       "CSS",
+      "Makefile",
       "Java",
-      "C#",
-      "SQL"
+      "Dart",
+      "HTML",
+      "PHP",
+      "Python"
     ]
   },
   "repositories": [
     {
       "name": "Vicente-Souza-Desenvolvedor-de-Sistemas",
-      "description": "Portfólio profissional moderno e interativo",
+      "description": "Desenvolvedor de Sistemas focado em soluções práticas e eficientes. Experiência em HTML, CSS, JavaScript, Python e SQL. Apaixonado por tecnologia, automação e interfaces funcionais.",
       "html_url": "https://github.com/Souza371/Vicente-Souza-Desenvolvedor-de-Sistemas",
-      "homepage": "https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/",
+      "homepage": null,
       "language": "JavaScript",
-      "stargazers_count": 8,
-      "forks_count": 2,
-      "updated_at": "2024-10-28T00:00:00Z",
-      "topics": ["portfolio", "javascript", "html", "css"]
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "updated_at": "2025-10-28T23:59:37Z",
+      "topics": []
+    },
+    {
+      "name": "movie-explorer-app",
+      "description": "🎬 Movie Explorer - App Android moderno para buscar filmes via OMDb API. Desenvolvido com Kotlin, Jetpack Compose e Material 3. Projeto final de Android Development.",
+      "html_url": "https://github.com/Souza371/movie-explorer-app",
+      "homepage": "",
+      "language": "Kotlin",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-10-28T23:41:03Z",
+      "topics": []
+    },
+    {
+      "name": "ContadorComposeApp",
+      "description": "Aplicativo de contador interativo feito em Kotlin com Jetpack Compose, utilizando estado reativo e componentes básicos como Text, Button, Column e Row.",
+      "html_url": "https://github.com/Souza371/ContadorComposeApp",
+      "homepage": null,
+      "language": "Kotlin",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-10-17T22:05:09Z",
+      "topics": []
+    },
+    {
+      "name": "Souza371",
+      "description": null,
+      "html_url": "https://github.com/Souza371/Souza371",
+      "homepage": null,
+      "language": null,
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "updated_at": "2025-10-15T15:34:55Z",
+      "topics": []
+    },
+    {
+      "name": "first-contributions",
+      "description": "🚀✨ Help beginners to contribute to open source projects",
+      "html_url": "https://github.com/Souza371/first-contributions",
+      "homepage": "https://firstcontributions.github.io",
+      "language": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-10-15T15:25:42Z",
+      "topics": []
+    },
+    {
+      "name": "Guincho-On-demand",
+      "description": "O sistema é uma plataforma digital de intermediação de serviços de guincho e assistência veicular, funcionando de forma semelhante a aplicativos de transporte por demanda.",
+      "html_url": "https://github.com/Souza371/Guincho-On-demand",
+      "homepage": null,
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "updated_at": "2025-10-10T01:45:49Z",
+      "topics": []
+    },
+    {
+      "name": "carteira-digital",
+      "description": "Sistema de controle financeiro pessoal para gerenciamento de receitas,  despesas e investimentos.",
+      "html_url": "https://github.com/Souza371/carteira-digital",
+      "homepage": null,
+      "language": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-09-24T23:18:08Z",
+      "topics": []
+    },
+    {
+      "name": "Aplicativo-simples-de-Lista-de-Tarefas-To-Do-List-",
+      "description": " Lista de Tarefas",
+      "html_url": "https://github.com/Souza371/Aplicativo-simples-de-Lista-de-Tarefas-To-Do-List-",
+      "homepage": null,
+      "language": "CSS",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-09-19T00:39:14Z",
+      "topics": []
+    },
+    {
+      "name": "Game-of-Trones",
+      "description": null,
+      "html_url": "https://github.com/Souza371/Game-of-Trones",
+      "homepage": null,
+      "language": "Makefile",
+      "stargazers_count": 0,
+      "forks_count": 1,
+      "updated_at": "2025-09-16T00:11:12Z",
+      "topics": []
+    },
+    {
+      "name": "spring-security-jwt-demo",
+      "description": "API de autenticação de usuários com Spring Boot 3, Spring Security 6 e JWT.",
+      "html_url": "https://github.com/Souza371/spring-security-jwt-demo",
+      "homepage": null,
+      "language": "Java",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-09-10T04:07:29Z",
+      "topics": []
+    },
+    {
+      "name": "Game-of-Trones2.0",
+      "description": null,
+      "html_url": "https://github.com/Souza371/Game-of-Trones2.0",
+      "homepage": null,
+      "language": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-09-06T00:07:44Z",
+      "topics": []
+    },
+    {
+      "name": "Fluttre",
+      "description": null,
+      "html_url": "https://github.com/Souza371/Fluttre",
+      "homepage": null,
+      "language": "Dart",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2025-09-04T00:00:28Z",
+      "topics": []
     }
   ],
-  "last_updated": "2024-10-28T12:00:00.000Z"
+  "last_updated": "2025-10-28T23:59:54.154Z"
 }

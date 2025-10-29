@@ -2,8 +2,8 @@ name: 🚀 Update Portfolio Automatically
 
 on:
   schedule:
-    # Atualiza diariamente às 00:00 UTC (21:00 Brasília)
-    - cron: '0 0 * * *'
+    # Atualiza a cada 2 horas (00:00, 02:00, 04:00, 06:00, 08:00, 10:00, 12:00, 14:00, 16:00, 18:00, 20:00, 22:00 UTC)
+    - cron: '0 */2 * * *'
   push:
     branches: [ main ]
   workflow_dispatch: # Permite executar manualmente
@@ -87,21 +87,21 @@ jobs:
         # Atualizar data de última atualização no README
         sed -i "s/Última atualização:.*/Última atualização: $(date +'%d\/%m\/%Y %H:%M')/" README.md || true
         
-        echo "📝 Dados atualizados com sucesso!"
+        echo "📝 Dados atualizados com sucesso a cada 2 horas!"
     
     - name: 📤 Commit and Push Changes
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.email "vicentedesouza762@gmail.com"
+        git config --local user.name "Vicente Souza"
         
         # Verificar se há mudanças
         if git diff --exit-code github-data.json > /dev/null; then
           echo "📊 Nenhuma mudança nos dados do GitHub"
         else
           git add github-data.json README.md
-          git commit -m "🤖 Auto-update: GitHub data $(date +'%Y-%m-%d %H:%M')"
+          git commit -m "🤖 Auto-update a cada 2h: GitHub data $(date +'%Y-%m-%d %H:%M') - Vicente Souza"
           git push
-          echo "✅ Portfolio atualizado automaticamente!"
+          echo "✅ Portfolio atualizado automaticamente a cada 2 horas!"
         fi
     
     - name: 🌐 Deploy to GitHub Pages
@@ -114,5 +114,6 @@ jobs:
     - name: 📱 Send Notification (opcional)
       if: success()
       run: |
-        echo "🎉 Portfolio atualizado com sucesso!"
+        echo "🎉 Portfolio atualizado com sucesso a cada 2 horas!"
         echo "🔗 Acesse: https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/"
+        echo "⏰ Próxima atualização em 2 horas!"
