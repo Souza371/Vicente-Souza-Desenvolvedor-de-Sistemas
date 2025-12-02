@@ -257,7 +257,7 @@ function initSkillsAnimations() {
                 // Animar barras de progresso
                 skillBars.forEach((bar, index) => {
                     setTimeout(() => {
-                        const percent = bar.getAttribute('data-percent');
+                        const percent = bar.getAttribute('data-progress');
                         bar.style.width = percent + '%';
                         
                         // Animar contador
