@@ -32,12 +32,12 @@ Este é meu portfólio pessoal **100% AUTOMATIZADO** que apresenta minha jornada
 ### Opção 1: Visualização Local
 1. Clone este repositório:
 ```bash
-git clone https://github.com/Souza371/Vicente-Souza-Desenvolvedor-de-Sistemas.git
+git clone https://github.com/Souza371/portfolio-vicente-souza.git
 ```
 
 2. Navegue até a pasta do projeto:
 ```bash
-cd Vicente-Souza-Desenvolvedor-de-Sistemas
+cd portfolio-vicente-souza
 ```
 
 3. Abra o arquivo `index.html` no seu navegador ou use um servidor local:
@@ -54,7 +54,7 @@ php -S localhost:8000
 
 ### Opção 2: GitHub Pages (RECOMENDADO)
 O site está **automaticamente disponível** e **se atualiza sozinho** em: 
-🔗 **https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/**
+🔗 **https://souza371.github.io/portfolio-vicente-souza/**
 
 ## 🤖 AUTOMATIZAÇÃO SUPER SPEED
 
@@ -72,7 +72,7 @@ O site está **automaticamente disponível** e **se atualiza sozinho** em:
 ## 📁 Estrutura AUTOMATIZADA do Projeto
 
 ```
-Vicente-Souza-Desenvolvedor-de-Sistemas/
+portfolio-vicente-souza/
 ├── 🤖 .github/workflows/   # GitHub Actions (AUTOMATIZAÇÃO)
 │   └── update-portfolio.yml # Workflow que executa a cada 2h
 ├── 📊 github-data.json     # Cache de dados do GitHub
@@ -221,8 +221,8 @@ Contribuições são sempre bem-vindas! Para contribuir:
 **Vicente Souza** - Desenvolvedor de Sistemas
 - 🐙 **GitHub:** [@Souza371](https://github.com/Souza371)  
 - 📧 **Email:** vicentedesouza762@gmail.com
-- 🌐 **Portfolio:** https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/
-- 🔗 **Repositório:** [Vicente-Souza-Desenvolvedor-de-Sistemas](https://github.com/Souza371/Vicente-Souza-Desenvolvedor-de-Sistemas)
+- 🌐 **Portfolio:** https://souza371.github.io/portfolio-vicente-souza/
+- 🔗 **Repositório:** [portfolio-vicente-souza](https://github.com/Souza371/portfolio-vicente-souza)
 
 ## 🏆 Diferenciais Técnicos
 

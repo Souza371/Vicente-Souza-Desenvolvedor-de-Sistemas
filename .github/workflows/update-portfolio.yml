@@ -115,5 +115,5 @@ jobs:
       if: success()
       run: |
         echo "🎉 Portfolio atualizado com sucesso a cada 2 horas!"
-        echo "🔗 Acesse: https://souza371.github.io/Vicente-Souza-Desenvolvedor-de-Sistemas/"
+        echo "🔗 Acesse: https://souza371.github.io/portfolio-vicente-souza/"
         echo "⏰ Próxima atualização em 2 horas!"
