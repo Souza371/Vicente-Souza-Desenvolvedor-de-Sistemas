@@ -262,7 +262,7 @@ function initSkillsAnimations() {
                         
                         // Animar contador
                         animateCounter(bar, percent);
-                    }, index * 200);
+                    }, index * 300);
                 });
                 
                 // Animar cards de resumo
