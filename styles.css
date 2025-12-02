@@ -2569,20 +2569,41 @@ footer {
 
 .studying-tag {
     background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
-    color: #ffffff; /* Cor branca sólida para melhor contraste */
-    padding: 0.7rem 1.2rem; /* Aumentado o padding para melhor legibilidade */
+    color: #ffffff;
+    padding: 0.7rem 1.2rem;
     border-radius: 25px;
-    font-size: 0.9rem; /* Aumentado o tamanho da fonte */
-    font-weight: 600; /* Fonte mais pesada para melhor visibilidade */
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para melhor contraste */
-    border: 2px solid rgba(255, 255, 255, 0.2); /* Borda sutil para destaque */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     animation: pulse 2s infinite;
     transition: all 0.3s ease;
+}
+
+.studying-tag.graduate {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    animation: graduateGlow 3s infinite;
+}
+
+@keyframes graduateGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
 }
 
 .studying-tag:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+.studying-tag.graduate:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
 }
 
 /* Experience Section */
